@@ -10,17 +10,18 @@ import Employer from './components/Employer';
 
 function App() {
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/" component={Home}/> 
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={SignUp} />
-        <Route path="/profile" component={Profile} />
-        <Route path="/job-posting" component={JobPosting} />
-        <Route path="/employer" component={Employer} />
+    <Home />
+    // <Router>
+    //   <Switch>
+    //     <Route exact path="/" component={Home}/> 
+    //     <Route path="/login" component={Login} />
+    //     <Route path="/signup" component={SignUp} />
+    //     <Route path="/profile" component={Profile} />
+    //     <Route path="/job-posting" component={JobPosting} />
+    //     <Route path="/employer" component={Employer} />
         
-      </Switch>
-    </Router>
+    //   </Switch>
+    // </Router>
   );
 }
 export default App;
