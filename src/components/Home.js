@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 
 const jobData = [
   { id: 1, title: 'Software Developer' },
@@ -17,15 +16,6 @@ function Home() {
 
   return (
     <Grid>
-      <header>
-        <div className="header-title">
-          Skill Checker
-        </div>
-        <nav>
-          <Link to="/profile">Profile</Link>
-        </nav>
-      </header>
-
       <main>
         <section>
           <h2>Latest Jobs</h2>
