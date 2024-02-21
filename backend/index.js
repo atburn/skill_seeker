@@ -9,12 +9,14 @@
 
 // ----------------------------------------------
 // retrieve necessary files (express and cors)
-const express = require("express")
-const cors = require("cors")
+import express from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
+
+
 // retrieve the MySQL DB Configuration Module
-const dbConnection = require("./config")
+// const dbConnection = require("./config")
 // use this library for parsing HTTP body requests
-var bodyParser = require('body-parser');
 
 
 // ----------------------------------------------
@@ -22,7 +24,7 @@ var bodyParser = require('body-parser');
 //      and parses incoming requests with JSON
 //      payloads
 // ----------------------------------------------
-var app = express(express.json); 
+const app = express(express.json); 
 
 // ----------------------------------------------
 // (B)  Use the epxress cors middleware
@@ -37,6 +39,15 @@ var app = express(express.json);
 app.use(cors());
 app.use(bodyParser.json());
 
+
+
+import FirebaseAuthHandler from "./FirebaseAuthHandler.js";
+import FirebaseDatabaseHandler from "./FirebaseDatabaseHandler.js";
+FirebaseAuthHandler.start();
+FirebaseDatabaseHandler.getDatabaseEntry("test");
+// FirebaseAuthHandler.signInUser("testuser@test.com", "testpassword");
+
+
 // ----------------------------------------------
 // Ref: https://expressjs.com/en/4x/api.html#app
 // (C)  Create a server such that it binds and
@@ -45,6 +56,9 @@ app.use(bodyParser.json());
 app.listen(2000, () => {
     console.log("Express server is running and listening");
 }); 
+
+
+
 
 app.get("/", (request, response) => {
     console.log("here");
