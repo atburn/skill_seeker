@@ -149,3 +149,32 @@ ul {
 .underline {
   text-decoration: underline;
 }
+
+
+.section {
+  margin-top: 20px;
+  padding: 10px;
+  background: #eee; 
+}
+
+.field {
+  display: flex; 
+  margin: 10px 0;
+}
+
+label {
+  width: 100px; 
+}
+
+.work-experiences {
+  display: flex; 
+  flex-direction: column;
+}
+
+.experience {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 10px;  
+  border-bottom: 1px solid #ccc; 
+  padding: 10px;
+}
