@@ -13,13 +13,9 @@ function App() {
       <Home />
       <SignUp />
       <Login />
-      <button onClick={testBackend}>Test</button>
 
     </>
   );
 }
 export default App;
 
-async function testBackend() {
-  await axios.get("http://localhost:2000/");
-}

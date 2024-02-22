@@ -22,10 +22,12 @@ export default class FirebaseDatabaseHandler {
             }
         })
             .then(response => {
+                
                 console.log(response.data);
             })
             .catch(error => {
-                console.log(`Error retrieving entry with key: ${key}`);
+                console.error(`Error retrieving entry with key: ${key}`);
+                console.error(error.response.statusText);
 
             });
     }

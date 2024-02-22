@@ -44,8 +44,9 @@ app.use(bodyParser.json());
 import FirebaseAuthHandler from "./FirebaseAuthHandler.js";
 import FirebaseDatabaseHandler from "./FirebaseDatabaseHandler.js";
 FirebaseAuthHandler.start();
+FirebaseAuthHandler.signInUser("testuser@test.com", "testpassword");
+
 FirebaseDatabaseHandler.getDatabaseEntry("test");
-// FirebaseAuthHandler.signInUser("testuser@test.com", "testpassword");
 
 
 // ----------------------------------------------
