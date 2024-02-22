@@ -4,7 +4,7 @@ import Header from './Header';
 function JobPosting() {
   return (
     <div>
-      {/* JobPosting page content */}
+      {<h2>Latest Jobs</h2>}
     </div>
   );
 }
