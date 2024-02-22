@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './CommonStyles.css';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -19,7 +20,8 @@ function Login() {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+    <div className="form-container">
+      <form className="form-group" onSubmit={handleSubmit}>
         <h3>Log In</h3>
         <div className="mb-3">
           <label htmlFor="email">Email Address</label>
@@ -66,6 +68,7 @@ function Login() {
           Forgot <a href="#">Password?</a>
         </p>
       </form>
+      </div>
     </>
   )
 }
