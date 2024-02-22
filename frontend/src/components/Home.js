@@ -1,37 +1,37 @@
-
-const jobData = [
-  { id: 1, title: 'Software Developer' },
-  { id: 2, title: 'Frontend Engineer' }
-];
-
-function Grid({ children }) {
-  return (
-    <div className="grid">
-      {children}
-    </div>
-  );
-}
-
+import { Link } from 'react-router-dom'; 
+import backgroundImage from './background.jpg';
+import logoImage from './logo.png';
 function Home() {
 
   return (
-    <Grid>
-      <main>
-        <section>
-          <h2>Latest Jobs</h2>
-          {
-            jobData.map(job => (
-              <div key={job.id}>{job.title}</div>
-            ))
-          }
-        </section>
+    <div className="home" style={{backgroundImage: `url(${backgroundImage})`}}>
+     <div className="logo">
+        <img src={logoImage} alt="Site Logo" />
+      </div>
 
-        <section>
-          <h2>Top Companies</h2>
-        </section>
-      </main>
-    </Grid>
+      <div className="tagline">
+      <h3>A Place for <span className="underline">Students</span> to Find Latest Jobs in USA</h3>
+        <p>
+          Latest New Grads/Internships for UW Students  
+        </p>
+      </div>
+
+
+
+      <div className="quote">
+        <h1 style={{color: '#0077ff'}}>
+           Find the Right Job in the Right Company
+        </h1>
+        
+        <Link to="/jobs">
+           <button className="btn">Browse Jobs</button> 
+        </Link>
+
+      </div>
+
+    </div>
   );
+
 }
 
 export default Home;
