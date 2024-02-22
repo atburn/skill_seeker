@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './CommonStyles.css';
 
-function Login() {
+function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -22,7 +22,7 @@ function Login() {
     <>
     <div className="form-container">
       <form className="form-group" onSubmit={handleSubmit}>
-        <h3>Log In</h3>
+        <h3>Sign In</h3>
         <div className="mb-3">
           <label htmlFor="email">Email Address</label>
           <input
@@ -73,4 +73,4 @@ function Login() {
   )
 }
 
-export default Login;
+export default SignIn;

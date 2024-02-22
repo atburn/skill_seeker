@@ -3,7 +3,7 @@ import './App.css';
 import Home from './components/Home';
 import Header from './components/Header';
 import SignUp from './components/SignUp';
-import Login from './components/Login';
+import SignIn from './components/SignIn';
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       <Header />
       <Home />
       <SignUp />
-      <Login />
+      <SignIn />
 
     </>
   );
