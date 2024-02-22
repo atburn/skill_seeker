@@ -24,7 +24,7 @@ import bodyParser from "body-parser";
 //      and parses incoming requests with JSON
 //      payloads
 // ----------------------------------------------
-const app = express(express.json); 
+const app = express(express.json);
 
 // ----------------------------------------------
 // (B)  Use the epxress cors middleware
@@ -43,22 +43,18 @@ app.use(bodyParser.json());
 
 import FirebaseAuthHandler from "./FirebaseAuthHandler.js";
 import FirebaseDatabaseHandler from "./FirebaseDatabaseHandler.js";
+
 FirebaseAuthHandler.start();
-FirebaseAuthHandler.signInUser("testuser@test.com", "testpassword");
+FirebaseAuthHandler.signInUser("testuser@test.com", "testpassword").then((data) => {
+    FirebaseDatabaseHandler.getDatabaseEntry("test");
 
-FirebaseDatabaseHandler.getDatabaseEntry("test");
+});
 
 
-// ----------------------------------------------
-// Ref: https://expressjs.com/en/4x/api.html#app
-// (C)  Create a server such that it binds and
-//      listens on a specified host and port.
-//      We will use default host and port 3000.
+
 app.listen(2000, () => {
     console.log("Express server is running and listening");
-}); 
-
-
+});
 
 
 app.get("/", (request, response) => {

@@ -21,7 +21,7 @@ function Home() {
           <h2>Latest Jobs</h2>
           {
             jobData.map(job => (
-              <div key={job.id}>{job.title}</div>
+              <div key={job.id}>{job.title}</div> 
             ))
           }
         </section>

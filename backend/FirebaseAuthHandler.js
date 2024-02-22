@@ -33,10 +33,11 @@ export default class FirebaseAuthHandler {
         }
 
         const auth = getAuth();
-        createUserWithEmailAndPassword(auth, email, password)
+        return createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                console.log("Created a new user: ")
+                console.log("Created a new user with email: " + email)
                 // console.log(userCredential.user);
+                FirebaseAuthHandler.user = userCredential.user;
             })
             .catch((error) => {
                 console.error("Error creating a new user:");
@@ -51,9 +52,10 @@ export default class FirebaseAuthHandler {
             return;
         }
         const auth = getAuth();
-        signInWithEmailAndPassword(auth, email, password)
+        return signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                console.log("Signed in user: ");
+                console.log("Signed in user with email: " + email);
+                FirebaseAuthHandler.user = userCredential.user;
                 // console.log(userCredential.user);
             })
             .catch((error) => {
