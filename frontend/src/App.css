@@ -52,3 +52,18 @@ ul {
 .header nav a:hover {
   color: var(--primary-color);
 }
+
+.global-header {
+  background-color: #003049;
+  padding-left: 10px;
+  display: flex;
+  color: white;
+  align-items: center;
+}
+
+
+.header-nav>* {
+  padding-left: 10px;
+  padding-right: 10px;
+  color: white;
+}
