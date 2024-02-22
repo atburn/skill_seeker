@@ -33,7 +33,8 @@ function SignUp() {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+    <div className="form-container">
+      <form className="form-group" onSubmit={handleSubmit}>
         <h3>Sign Up</h3>
         <div className="mb-3">
           <label htmlFor="firstName">First Name</label>
@@ -96,6 +97,7 @@ function SignUp() {
           Already Registered <a href="/sign-in">Sign In?</a>
         </p>
       </form>
+      </div>
     </>
   );
 }
