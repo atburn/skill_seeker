@@ -88,6 +88,7 @@ function SignUp() {
             aria-label="Password"
           />
         </div>
+        <br></br>
         <div className="d-grid">
           <button type="submit" className="btn btn-primary">
             Sign Up

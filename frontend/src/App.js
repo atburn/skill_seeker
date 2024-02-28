@@ -6,6 +6,7 @@ import SignUp from './components/SignUp';
 import Jobs from './components/JobPosting';
 import Profile from './components/Profile';
 import SignIn from './components/SignIn';
+import Employer from './components/Employer';
 import axios from 'axios';
 import { Routes, Route } from 'react-router-dom';
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/employer" element={<Employer />} />
       </Routes>
     </>
   ) 

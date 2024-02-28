@@ -1,0 +1,11 @@
+/* Employer.css */
+.employer {
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+.employer h1, .employer h2 {
+    color: #333;
+}
+.employer p {
+    color: #666;
+}
