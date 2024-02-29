@@ -1,0 +1,56 @@
+OBJECTS:
+	Education:
+		school: string
+		degree: string
+		field of study: string
+		start date: date (mm/yyyy)
+		end date (or expected): date (mm/yyyy)
+		gpa: int
+		summary: string
+
+	Experience:
+		title: string
+		company: string
+		location: string
+		start date: date (mm/yyyy)
+		end date (null if present job): date (mm/yyyy)
+		summary: string
+
+	User:
+		uid: string
+		name: string
+		email: string
+		title: string
+		summary: summary
+		education: Education[]
+		experience: Experience[]
+
+	Company
+		uid: string
+		name: string
+		summary: string
+		employees: user[]
+
+
+
+
+
+
+DATABASE
+
+root 
+	users
+		<user uid>: string
+			title: string
+			summary: summary
+			education: Education[]
+			experience: Experience[]
+				
+
+	companies
+		<company uid> string
+			uid: string
+			name: string
+			summary: string
+			employees: user[]
+		

@@ -13,6 +13,20 @@ const firebaseConfig = {
     measurementId: "G-CM8KQ7NWMB"
 };
 
+
+
+/**
+ * HOW TO USE:
+ * 
+ * FIRST THING YOU NEED TO CALL IS FirebaseAuthHandler.start() INITIALLY.
+ * 
+ * TO SIGN IN USER:
+ *  FirebaseAuthHandler.signInUser("some email", "some password")
+ *      .then((data) => console.log(data)) 
+ * 
+ * // DATA WILL EITHER BE NULL OR A UID. IF ITS NULL, UNSUCCESSFUL LOGIN. IF ITS A UID, SAVE IT SOMEWHERE.
+ * 
+ */
 export default class FirebaseAuthHandler {
 
     constructor() {
@@ -22,11 +36,10 @@ export default class FirebaseAuthHandler {
     static start() {
         const firebaseApp = initializeApp(firebaseConfig);
         this.hasStarted = true;
-
     }
 
 
-    static createUser(email, password) {
+    static async createUser(email, password) {
         if (this.hasStarted == false) {
             console.error("createUser() has been called before start()");
             return;
@@ -34,35 +47,29 @@ export default class FirebaseAuthHandler {
 
         const auth = getAuth();
         return createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                console.log("Created a new user with email: " + email)
-                // console.log(userCredential.user);
-                FirebaseAuthHandler.user = userCredential.user;
+            .then((data) => {
+                return data.user.uid;
             })
             .catch((error) => {
-                console.error("Error creating a new user:");
-                console.error(`Error code: ${error.code}`);
-                console.error(error.message);
+                return null;
             });
+
     }
 
-    static signInUser(email, password) {
+    static async signInUser(email, password) {
         if (this.hasStarted == false) {
             console.error("createUser() has been called before start()");
             return;
         }
         const auth = getAuth();
         return signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                console.log("Signed in user with email: " + email);
-                FirebaseAuthHandler.user = userCredential.user;
-                // console.log(userCredential.user);
+            .then((data) => {
+                return data.user.uid;
             })
             .catch((error) => {
-                console.error(`Error signing in user with email (${email}):`);
-                console.error(`Error code: ${error.code}`);
-                console.error(error.message);
+                return null;
             });
+
     }
 }
 
