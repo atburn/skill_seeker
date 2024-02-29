@@ -12,3 +12,12 @@ Job Postings:
     - Get a list of job postings that match some sort of query (GET)
 
 
+
+Authetication Process:
+    1. Call FirebaseAuthHandler.signInUser and provide necessary arguments
+    2. Acquire UID and store it somewhere
+    3. When doing calls to backend, pass the uid through in body as "senderUID"
+
+    
+
+

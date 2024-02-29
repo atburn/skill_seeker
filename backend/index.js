@@ -37,8 +37,8 @@ app.get("/users", async (req, res) => {
     try {
         const users = await User.find();
         res.status(200).json(users);
-    } catch (err) {
-        console.error(err);
+    } catch (error) {
+        console.error(error);
         res.status(500).json({ error: "Error retrieving users." })
     }
 })
@@ -64,8 +64,8 @@ app.get("/users/:uid", async (req, res) => {
             res.status(200).json(users);
         }
 
-    } catch (err) {
-        console.error(err);
+    } catch (error) {
+        console.error(error);
         res.status(500).json({ "Error": "No matching users with the UID of " + uid });
     }
 });
@@ -77,9 +77,9 @@ app.get("/users/:uid", async (req, res) => {
  *
  * Expected body:
  * {
- *  uid: "uid",
- *  displayName: "<name>",
- *  email: "<email>",
+ *  "senderUID": <uid>,
+ *  "name": "<name>",
+ *  "email": "<email>",
  * }
  *
  * Successful response:
@@ -94,14 +94,14 @@ app.get("/users/:uid", async (req, res) => {
  *
  */
 app.post("/users/signup", async (req, res) => {
-    const uid = req.body.uid;
+    const senderUID = req.body.senderUID;
     const email = req.body.email;
     const name = req.body.name;
 
     try {
         const user = new User(
             {
-                uid: uid,
+                uid: senderUID,
                 name: name,
                 email: email,
                 summary: "",
@@ -126,7 +126,7 @@ app.post("/users/signup", async (req, res) => {
  * 
  * Example request body:
  * {
- *  "uid": <uid>,
+ *  "senderUID": <uid>,
  *  "name": <name>,
  *  "email": <email>,
  *  "title": Supervisor,
@@ -163,12 +163,12 @@ app.put("/users/:uid", async (req, res) => {
     const body = req.body;
 
     const profileToModify = parameters.uid;
-    const senderUid = body.uid;
+    const senderUID = body.senderUID;
 
-    if (profileToModify !== senderUid) {
+    if (profileToModify !== senderUID) {
         res.status(500).json({
             error: "UID of sender doesn't match UID of the modifed profile.",
-            senderUid: senderUid,
+            senderUid: senderUID,
             requestUid: profileToModify
         })
         return;
@@ -221,8 +221,8 @@ app.get("/companies", async (req, res) => {
     try {
         const company = await Company.find();
         res.status(200).json(company);
-    } catch (err) {
-        console.error(err);
+    } catch (error) {
+        console.error(error);
         res.status(500).json({ error: "Error retrieving companies." })
     }
 });
@@ -232,34 +232,33 @@ app.get("/companies", async (req, res) => {
 app.get("/companies/:uid", async (req, res) => {
 
     try {
-        const uid = req.params.uid;
+        const uid = req.params.senderUID;
         const company = await Company.find({ uid: uid });
         if (company.length === 0) {
-            res.status(500).json({ "Error": "No matching users with the UID of " + uid });
+            res.status(500).json({ "Error": "No matching companies with the UID of " + uid });
         } else {
             res.status(200).json(company);
         }
 
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ "Error": "No matching users with the UID of " + uid });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ "Error": "No matching companies with the UID of " + uid });
     }
 });
 
 
 app.post("/companies/new", async (req, res) => {
-    const uid = req.body.uid;
+    const uid = req.body.senderUID;
     const email = req.body.email;
     const name = req.body.name;
 
     try {
-        const company = new Company(
-            {
-                uid: uid,
-                name: name,
-                email: email,
-                summary: "",
-            });
+        const company = new Company({
+            uid: uid,
+            name: name,
+            email: email,
+            summary: "",
+        });
         await company.save();
         res.status(201).json(company);
 
@@ -279,12 +278,12 @@ app.put("/companies/:uid", async (req, res) => {
     const body = req.body;
 
     const companyToModify = parameters.uid;
-    const senderUid = body.uid;
+    const senderUID = body.senderUID;
 
-    if (companyToModify !== senderUid) {
+    if (companyToModify !== senderUID) {
         res.status(500).json({
             error: "UID of sender doesn't match UID of the modifed company.",
-            senderUid: senderUid,
+            senderUid: senderUID,
             requestUid: companyToModify
         })
         return;
