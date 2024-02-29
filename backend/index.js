@@ -73,7 +73,7 @@ app.get("/users/:uid", async (req, res) => {
 
 /**
  * POST: Sign up with name, email, and password
- * http://localhost:2000/users/signup
+ * http://localhost:2000/users/new
  *
  * Expected body:
  * {
@@ -83,17 +83,20 @@ app.get("/users/:uid", async (req, res) => {
  * }
  *
  * Successful response:
- * {
- *  Success: "Successfully logged in user.",
- *  user: {
- *      displayName: <name>,
- *      email: <email>,
- *      uid: <uid>
- *  }
- * }
+    {
+    "uid": "<senderUID>",
+    "name": "<name>",
+    "email": "<email>",
+    "title": "",
+    "summary": "",
+    "experience": [],
+    "education": [],
+    "_id": "65dfff17e0e82975efa912ec",
+    "__v": 0
+    }
  *
  */
-app.post("/users/signup", async (req, res) => {
+app.post("/users/new", async (req, res) => {
     const senderUID = req.body.senderUID;
     const email = req.body.email;
     const name = req.body.name;
@@ -153,7 +156,7 @@ app.post("/users/signup", async (req, res) => {
  * 
  * Status Codes:
  *  201: Profile has been updated.
- *      Sends updated user
+ *      Sends updated user, which should be identical to request body
  *  401: Unauthorized: sender UID doesn't match modifed user UID
  *  500: Server error
  * 
