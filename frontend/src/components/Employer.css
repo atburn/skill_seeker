@@ -1,11 +1,32 @@
-/* Employer.css */
 .employer {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.company-postings {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.posting {
+    border: 1px solid black;
     padding: 20px;
-    background-color: #f4f4f4;
+    width: 40%;
 }
-.employer h1, .employer h2 {
-    color: #333;
+
+.posting h2 {
+    margin: 0;
+    margin-bottom: 10px;
 }
-.employer p {
-    color: #666;
+
+.posting p {
+    margin: 0;
+    margin-bottom: 20px;
 }
+
+button {
+    margin-right: 10px;
+}
+
