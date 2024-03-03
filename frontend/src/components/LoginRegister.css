@@ -1,0 +1,61 @@
+.login-register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to right, #ff758c, #ff7eb3);
+}
+
+.login-register-card {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 300px;
+}
+
+.login-register-card h2 {
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.login-register-card input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-sizing: border-box; /* Added for input width consistency */
+}
+
+.login-register-card button {
+  width: 100%;
+  padding: 10px;
+  background-color: #ff758c;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-register-card button:hover {
+  background-color: #ff7eb3;
+}
+
+.login-register-card p {
+  text-align: center;
+  color: #666;
+}
+
+.login-register-card span {
+  color: #ff758c;
+  cursor: pointer;
+}
+
+/* Additional styling for 'New User?' and 'Already have an account?' */
+.login-register-card p span:hover {
+  text-decoration: underline;
+}
+
