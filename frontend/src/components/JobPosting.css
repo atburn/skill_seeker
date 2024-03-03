@@ -1,0 +1,49 @@
+.job-posting {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f4f4f4;
+    border-radius: 8px;
+}
+
+.job-posting input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.skills-filter {
+    margin-bottom: 20px;
+}
+
+.skills-filter label {
+    margin-right: 10px;
+}
+
+.job-posting {
+    background: #fff;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.job-posting h3 {
+    margin-top: 0;
+}
+
+.job-posting ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.job-posting li {
+    display: inline;
+    margin-right: 10px;
+    background: #e1e1e1;
+    color: #333;
+    padding: 5px;
+    border-radius: 5px;
+}
