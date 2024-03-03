@@ -73,16 +73,3 @@ export default class FirebaseAuthHandler {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
