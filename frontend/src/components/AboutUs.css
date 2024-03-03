@@ -1,0 +1,22 @@
+.about-us-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    color: #333;
+    background-color: #f4f4f4;
+}
+
+.about-us-container h1, .about-us-container h2 {
+    color: #022445;
+}
+
+.about-us-container p {
+    line-height: 1.6;
+}
+
+.social-links a {
+    margin-right: 10px;
+    color: #022445;
+}
+
+
