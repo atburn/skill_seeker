@@ -22,14 +22,22 @@ OBJECTS:
 		email: string
 		title: string
 		summary: summary
-		education: Education[]
+		education: []
 		experience: Experience[]
 
 	Company
 		uid: string
 		name: string
 		summary: string
-		employees: user[]
+		jobs: {
+			<id>: {
+				title: string
+				company: string
+				location: string
+				salary: number
+			}
+
+		}
 
 
 

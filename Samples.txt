@@ -1,0 +1,146 @@
+Sample Users:
+    Cassie Watts
+        uid:        nV1eURpJGpS4iSdpsyrrPHp6Zl73
+        email:      testuser1@email.com
+        password:   testuser1
+        title:      Software Developer at Sample Software Company
+        summary:    Sample summary for Cassie Watts
+        education: 
+            "school":       "University of Washington",
+            "degree":       "Bachelor of Science",
+            "fieldOfStudy": "Computer Science",
+            "startDate":    "09/2017",
+            "endDate":      "06/2021",
+            "summary":      "Sample education summary for Cassie at the University of Washington"
+
+            "school":       "Tacoma Community College",
+            "degree":       "Associates of Science",
+            "fieldOfStudy": "Engineering",
+            "startDate":    "09/2015",
+            "endDate":      "06/2017",
+            "summary":      "Sample education summary for Cassie at TCC"
+
+        experience:
+            "title":        "Junior Software Developer",
+            "company":      "Sample Software Company",
+            "location":     "Seattle, WA",
+            "startDate":    "06/2021",
+            "endDate":      null,
+            "summary":      "Sample work experience summary for Cassie at Sample Software Company"
+
+            "title":        "Software Developer Intern",
+            "company":      "Sample Software Company",
+            "location":     "Seattle, WA",
+            "startDate":    "07/2020",
+            "endDate":      "09/2020",
+            "summary":      "Sample work experience summary for Cassie at Sample Software Company"
+
+            "title": "Cashier",
+            "company":      "Sample Grocery Store",
+            "location":     "Kent, WA",
+            "startDate":    "03/2014",
+            "endDate":      "09/2015",
+            "summary":      "Sample work experience summary for Cassie at Sample Grocery Store"
+
+
+    William Allen
+        uid:        m5O5FZy6hEYwKRDHngxU6J8Mpxn1
+        email:      testuser2@email.com
+        password:   testuser2
+        title:      Manager at Sample Grocery Store
+        summary:    Sample summary for William Allen
+        education:
+            "school": University of Washington,
+            "degree": Bachelor of Science,
+            "fieldOfStudy": Psychology,
+            "startDate": "09/2014",
+            "endDate": "06/2018,
+            "summary": Sample education summary for William at the University of Washington 
+        experience:
+            "title": Manager,
+            "company": Sample Grocery Store,
+            "location": Kent, WA,
+            "startDate": 08/2018,
+            "endDate": null,
+            "summary": Sample work experience summary for William at Sample Grocery Store
+
+            "title": Customer Service Representative,
+            "company": Sample Grocery Store,
+            "location": Kent, WA,
+            "startDate": 03/2012,
+            "endDate": 02/2013,
+            "summary": Sample work experience summary for William at Sample Grocery Store
+
+
+
+
+    Adam Burke
+        uid:        CfuuRrQjnGMk8EQKWYKXswj9HDu1
+        email:      testuser3@email.com
+        password:   testuser3
+        title:      Hardware Engineer Intern at Sample Engineering Company
+        summary:    Sample summary for Adam Burke
+        education:
+            "school": "Western Washington Univerisity",
+            "degree": "Bachelor of Science",
+            "fieldOfStudy": "Hardware Engineering",
+            "startDate": "09/2021",
+            "endDate": null,
+            "summary": "Sample education summary for Adam at the Western Washington Univerisity"
+        experience:
+            "title": "Hardware Engineer Intern",
+            "company": "Sample Engineering Company",
+            "location": "Tacoma, WA",
+            "startDate": "06/2024",
+            "endDate": null,
+            "summary": "Sample work experience summary for Cassie at Sample Engineering Company"
+
+
+
+
+Sample Companies:
+    Sample Engineering Company
+        uid:        EfGwH1uRqsUlkQAo4L9WjDv5xCP2
+        email:      testcompany1@email.com
+        password:   testcompany1
+        jobs:
+            uid:            631e646f-51dd-4b14-bc94-aa500284826a
+                title:          Electrical Engineer
+                location:       Tacoma, WA
+                description:    Sample description for Electrical Engineer
+
+            uid:            b19a570c-86e7-4dba-998a-a3f98b2327ad
+                title:          Mechanical Engineer
+                location:       Tacoma, WA
+                description:    Sample Description for Mechanical Engineer
+
+
+    Sample Grocery Store
+        uid:        XESuFETTURTK9J1KEuB0RXo2x1X2
+        email:      testcompany2@email.com
+        password:   testcompany2
+        jobs:
+            uid:            4b1fa6c2-87be-4fd2-af43-32786464f751
+                title:          Cashier
+                location:       Kent, WA
+                description:    Sample description for Cashier
+            uid:            b19a570c-86e7-4dba-998a-a3f98b2327ad
+                title:          Stocker
+                location:       Kent, WA
+                description:    Sample description for Stocker
+
+
+    Sample Software Company
+        uid:        gvK6NPpNiHUMuUc3mzp54mBuDBf1
+        email:      testcompany3@email.com
+        password:   testcompany3
+        jobs:
+            uid:            3f231bc2-99b7-4111-b775-86df7b8d6252
+                title:          Software Developer
+                location:       Seattle, WA
+                description:    Sample description for Software Developer
+
+            uid:            7c3f54ac-4bc0-49df-8a0f-78700c99941c
+                title:          IT Technician
+                location:       Seattle, WA
+                description:    Sample description for IT Technician

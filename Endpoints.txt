@@ -1,0 +1,43 @@
+Users:
+    http://localhost:2000/users/
+        GET: Gets all users
+        POST: Create a new user
+
+    http://localhost:2000/users/{uid}
+        GET: Get a specific user
+        PUT: Update a specific user
+
+
+Companies:
+    http://localhost:2000/companies/
+        GET: Get all companies
+        POST: Create a new company
+
+    http://localhost:2000/companies/{uid}
+        GET: Get a specific company
+        PUT: Update a specific company
+
+    http://localhost:2000/companies/{uid}/jobs
+        GET: Get all jobs from a specific company
+        POST: Create a new job under a specific company
+
+    http://localhost:2000/companies/{uid}/jobs/{jobid}
+        GET: Get a specific job from a specific company
+        PUT: Update a specific job from a specific company
+    
+
+Job Postings:
+    http://localhost:2000/jobs/
+        GET: Get all jobs from all companies
+
+
+
+
+Authetication Process:
+    1. Call FirebaseAuthHandler.signInUser and provide necessary arguments
+    2. Acquire UID and store it somewhere
+    3. When doing calls to backend, pass the uid through in body as "senderUID"
+
+    
+
+
