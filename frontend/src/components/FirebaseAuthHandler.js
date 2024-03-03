@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 
 const firebaseConfig = {
     apiKey: "AIzaSyArlJtYhZe_hquSJNo8NUGpoPeGGWxOYyY",
@@ -70,6 +70,17 @@ export default class FirebaseAuthHandler {
                 return null;
             });
 
+    }
+
+    static async sendPasswordResetEmail(email) {
+        const auth = getAuth();
+        return sendPasswordResetEmail(auth, email)
+            .then(() => {
+                console.log('Password reset email sent');
+            })
+            .catch((error) => {
+                console.error('Error sending password reset email:', error);
+            });
     }
 }
 
