@@ -5,20 +5,53 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import { v4 as uuidv4 } from "uuid";
 
+
 const PORT = 2000;
 const app = express(express.json);
 app.use(cors());
 app.use(bodyParser.json());
-
+// const swaggerJSdoc = require("swagger-jsdoc");
+import swaggerJSdoc from "swagger-jsdoc";
+import swaggerUI from "swagger-ui-express";
+// const swaggerUI = require("swagger-ui-express");
+// const mainRoute = require('./routes/mainRoute');
+import mainRoute from './routes/mainRoute.js';
+import jobRoute from './routes/jobRoute.js';
+// const jobRoute = require('./routes/jobRoute');
 const mongoDBConnectionString =
     "mongodb+srv://skill-seeker-admin:admin@skill-seeker.dbyn3zl.mongodb.net/skill-seeker-db?retryWrites=true&w=majority&appName=skill-seeker";
 mongoose.connect(mongoDBConnectionString);
+
+// define the routes for our API
+app.use('/', mainRoute);
+app.use('/job', jobRoute);
+
+
+// define the Swagger JS DOc configuration
+const APIDocOptions = {
+    definition: {
+        openapi: '3.0.0',
+        info: {
+            title : 'RESTful Skill Seeker API',
+            description: 'An API for Skill Seeker job index.',
+            version : '1.0.0',
+            servers: ['http://localhost:' + PORT]
+        },
+    },
+    apis: ['./routes/*.js'], // path to the files containing the API routes.
+}
+
+// initialize the Swagger JSDoc
+const APIDocs = swaggerJSdoc(APIDocOptions);
+// Serve Swagger documentation
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(APIDocs));
 
 app.listen(PORT, () => {
     console.log("Listening at http://localhost:" + PORT);
 });
 
 import User from "./objects/User.js";
+
 
 /**
  * GET: Get all users:
