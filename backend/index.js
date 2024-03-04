@@ -82,22 +82,25 @@ app.get("/users", async (req, res) => {
  *      201: Found user
  *          Returns the user found.
  */
-app.get("/users/:uid", async (req, res) => {
-    try {
-        const uid = req.params.uid;
-        const users = await User.findOne({ uid: uid });
-        if (users.length === 0) {
-            res
-                .status(500)
-                .json({ Error: "No matching users with the UID of " + uid });
-        } else {
-            res.status(200).json(users);
+    app.get("/users/:uid", async (req, res) => {
+        try {
+            // testing
+            // const uid = req.params.uid;
+            
+            // testing
+            const users = await User.findOne(); 
+    
+            if (!users) {
+                res.status(500).json({ Error: "No matching users found." });
+            } else {
+                res.status(200).json(users);
+            }
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ Error: "Error retrieving users." });
         }
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ Error: "No matching users with the UID of " + uid });
-    }
-});
+    });
+    
 
 /**
  *  POST: Sign up with name, email, and password

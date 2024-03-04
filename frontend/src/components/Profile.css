@@ -1,0 +1,93 @@
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(to right, #ff758c, #ff7eb3);
+    padding: 20px;
+  }
+  
+  .section {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .section h3 {
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  .field {
+    margin-bottom: 15px;
+  }
+  
+  .field label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+  }
+  
+  .field input,
+  .field textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+    margin-top: 5px;
+  }
+  
+  .field textarea {
+    resize: vertical;
+  }
+  
+  .button {
+    width: 100%;
+    padding: 10px;
+    background-color: #ff758c;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: #ff7eb3;
+  }
+  
+  .picture {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .picture img {
+    max-width: 100%;
+    border-radius: 10px;
+  }
+  
+  .picture button,
+  .picture input {
+    margin-top: 10px;
+  }
+  
+  /* Additional styling for 'Add Experience' and 'Add Education' buttons */
+  .section button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+  }
+  
+  .section button:hover {
+    background-color: #45a049;
+  }
+  
