@@ -23,17 +23,8 @@ function Profile() {
   });
   
 
-  const [experiences, setExperiences] = useState([
-    {
-      id: 1,
-      title: '',
-      company: '',
-      location: '',
-      startDate: '',
-      endDate: '',
-      description: '',
-    },
-  ]);
+  
+  const [experiences, setExperiences] = useState([]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -86,18 +77,17 @@ function Profile() {
 
 
   const addExperience = () => {
-    setExperiences((prevExperiences) => [
-      ...prevExperiences,
-      {
-        id: prevExperiences.length + 1,
-        title: '',
-        company: '',
-        location: '',
-        startDate: '',
-        endDate: '',
-        description: '',
-      },
-    ]);
+    const newExperience = {
+      id: Date.now(),
+      title: '',
+      company: '',
+      location: '',
+      startDate: '',
+      endDate: '',
+      description: '',
+    };
+  
+    setExperiences((prevExperiences) => [...prevExperiences, newExperience]);
   };
 
   const updateExperience = (id, field, value) => {
@@ -231,33 +221,60 @@ function Profile() {
       <div className="section">
         <h3>Work Experience</h3>
 
-        {experiences.map((exp) => (
-            <div key={exp.id} className="experience">
-           <input
-  placeholder="Title"
-  value={exp.title || ''}
-  onChange={(e) => updateExperience(exp.id, 'title', e.target.value)}
-/>
+        {experiences.map((exp, index) => (
+  <div key={index} className="experience">
+    <input
+      placeholder="Title"
+      value={exp.title || ''}
+      onChange={(e) => {
+        const updatedExperiences = [...experiences];
+        updatedExperiences[index] = {
+          ...updatedExperiences[index],
+          title: e.target.value,
+        };
+        setExperiences(updatedExperiences);
+      }}
+    />
 
 <input
-  placeholder="Company"
-  value={exp.company || ''}
-  onChange={(e) => updateExperience(exp.id, 'company', e.target.value)}
-/>
+      placeholder="Company"
+      value={exp.company || ''}
+      onChange={(e) => {
+        const updatedExperiences = [...experiences];
+        updatedExperiences[index] = {
+          ...updatedExperiences[index],
+          company: e.target.value,
+        };
+        setExperiences(updatedExperiences);
+      }}
+    />
 
-<input
-  placeholder="Location"
-  value={exp.location || ''}
-  onChange={(e) => updateExperience(exp.id, 'location', e.target.value)}
-/>
-
+    <input
+      placeholder="Location"
+      value={exp.location || ''}
+      onChange={(e) => {
+        const updatedExperiences = [...experiences];
+        updatedExperiences[index] = {
+          ...updatedExperiences[index],
+          location: e.target.value,
+        };
+        setExperiences(updatedExperiences);
+      }}
+    />
 <div className="form-group">
       <label>Start Date:</label>
       <input
         type="text"
         placeholder="MM/yyyy"
         value={exp.startDate || ''}
-        onChange={(e) => updateExperience(exp.id, 'startDate', e.target.value)}
+        onChange={(e) => {
+          const updatedExperiences = [...experiences];
+          updatedExperiences[index] = {
+            ...updatedExperiences[index],
+            startDate: e.target.value,
+          };
+          setExperiences(updatedExperiences);
+        }}
       />
     </div>
 
@@ -267,19 +284,32 @@ function Profile() {
         type="text"
         placeholder="MM/yyyy"
         value={exp.endDate || ''}
-        onChange={(e) => updateExperience(exp.id, 'endDate', e.target.value)}
+        onChange={(e) => {
+          const updatedExperiences = [...experiences];
+          updatedExperiences[index] = {
+            ...updatedExperiences[index],
+            endDate: e.target.value,
+          };
+          setExperiences(updatedExperiences);
+        }}
       />
     </div>
 
-            <textarea
-              placeholder="Description"
-              value={exp.description}
-              onChange={(e) =>
-                updateExperience(exp.id, 'description', e.target.value)
-              }
-            />
-          </div>
-        ))}
+    
+  <textarea
+  placeholder="Description"
+  value={exp.description || ''}
+  onChange={(e) => {
+    const updatedExperiences = [...experiences];
+    updatedExperiences[index] = {
+      ...updatedExperiences[index],
+      description: e.target.value,
+    };
+    setExperiences(updatedExperiences);
+  }}
+/>
+</div>
+))}
 
         <button onClick={addExperience}>Add Experience</button>
       </div>
