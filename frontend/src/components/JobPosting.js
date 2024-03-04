@@ -1,25 +1,23 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './JobPosting.css'; 
-
+import axios from 'axios';
 function JobPosting() {
     const [searchTerm, setSearchTerm] = useState('');
+    const [jobs, setJobs] = useState([]);
+    useEffect(() => {
+        
+        fetchJobs();
+    }, []);
 
-    const jobs = [
-        { 
-            id: 3, 
-            title: "Software Developer", 
-            company: "Sample Software Company", 
-            location: "Seattle, WA",
-            description: "Sample description for Software Developer"
-        },
-        { 
-            id: 4, 
-            title: "IT Technician", 
-            company: "Test Company", 
-            location: "Seattle, WA",
-            description: "Sample description for IT Technician"
-        },
-    ];
+    const fetchJobs = async () => {
+        try {
+            
+            const response = await axios.get('/jobs');
+            setJobs(response.data);
+        } catch (error) {
+            console.error('Error fetching job information:', error);
+        }
+    };
 
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
