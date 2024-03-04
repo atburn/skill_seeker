@@ -84,22 +84,19 @@ app.get("/users", async (req, res) => {
  */
     app.get("/users/:uid", async (req, res) => {
         try {
-            // testing
-            // const uid = req.params.uid;
-            
-            // testing
-            const users = await User.findOne(); 
-    
-            if (!users) {
-                res.status(500).json({ Error: "No matching users found." });
-            } else {
-                res.status(200).json(users);
-            }
+          const uid = req.params.uid;
+          const user = await User.findOne({ uid: uid }); 
+      
+          if (!user) {
+            res.status(404).json({ error: "No matching user found." });
+          } else {
+            res.status(200).json(user);
+          }
         } catch (error) {
-            console.error(error);
-            res.status(500).json({ Error: "Error retrieving users." });
+          console.error(error);
+          res.status(500).json({ error: "Error retrieving user." });
         }
-    });
+      });
     
 
 /**

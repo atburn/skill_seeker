@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Profile.css';
 function Profile() {
   const [formData, setFormData] = useState({
@@ -21,6 +21,7 @@ function Profile() {
     endDate: '',
     summary: '',
   });
+  
 
   const [experiences, setExperiences] = useState([
     {
@@ -50,82 +51,39 @@ function Profile() {
     }));
   };
 
-  const handleImageSelect = (event) => {
-    // Handle image selection
-  };
 
   const handleSave = async () => {
     try {
+      const uid = localStorage.getItem('uid');
       const profileData = {
-        uid: 'm5O5FZy6hEYwKRDHngxU6J8Mpxn1', 
-        firstName: '', 
-        lastName: '', 
-        email: '', 
+        senderUID: uid,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
         title: formData.title,
         summary: formData.summary,
-        education: [
-          {
-            school: education.school,
-            degree: education.degree,
-            fieldOfStudy: education.fieldOfStudy,
-            startDate: education.startDate,
-            endDate: education.endDate,
-            summary: education.summary,
-          },
-        ],
-        experience: experiences.map((exp) => ({
-          title: exp.title,
-          company: exp.company,
-          location: exp.location,
-          startDate: exp.startDate,
-          endDate: exp.endDate,
-          summary: exp.description,
-        })),
+        education: [education],
+        experience: experiences,
       };
-  
-      /*const response = await fetch('', {
-        method: 'POST',
+
+      const response = await fetch(`http://localhost:2000/users/${uid}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          authentication token)
         },
         body: JSON.stringify(profileData),
       });
   
       if (response.ok) {
         console.log('Profile saved successfully!');
-        
       } else {
         console.error('Failed to save profile:', response.statusText);
-       
       }
     } catch (error) {
       console.error('Error saving profile:', error.message);
-      
-    }
-  };   */
-
-      const response = await fetch('', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          //authentication token
-        },
-        body: JSON.stringify(profileData),
-      });
-
-      if (response.ok) {
-        console.log('Profile saved successfully!');
-        
-      } else {
-        console.error('Failed to save profile:', response.statusText);
-      
-      }
-    } catch (error) {
-      console.error('Error saving profile:', error.message);
-      
     }
   };
+
 
   const addExperience = () => {
     setExperiences((prevExperiences) => [
@@ -149,6 +107,25 @@ function Profile() {
       )
     );
   };
+
+
+
+    useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const uid = localStorage.getItem('uid');
+        const response = await fetch(`http://localhost:2000/users/${uid}`);
+        const data = await response.json();
+        setFormData(data);
+        setEducation(data.education[0]);
+        setExperiences(data.experience);
+      } catch (error) {
+        console.error('Error fetching profile data:', error.message);
+      }
+    };
+  
+    fetchProfileData();
+  }, []);
 
   return (
     <div className="profile">
@@ -176,15 +153,6 @@ function Profile() {
     onChange={handleInputChange}
   />
 </div>
-        <div className="field">
-          <label>DOB:</label>
-          <input
-            name="dob"
-            type="date"
-            value={formData.dob}
-            onChange={handleInputChange}
-          />
-        </div>
 
         <div className="field">
           <label>Summary:</label>
@@ -228,24 +196,26 @@ function Profile() {
         </div>
 
         <div className="field">
-          <label>Start Date:</label>
-          <input
-            type="date"
-            name="startDate"
-            value={education.startDate}
-            onChange={handleEducationChange}
-          />
-        </div>
+  <label>Start Date:</label>
+  <input
+    type="text"
+    name="startDate"
+    value={education.startDate}
+    onChange={handleEducationChange}
+    placeholder="MM/yyyy"
+  />
+</div>
 
-        <div className="field">
-          <label>End Date:</label>
-          <input
-            type="date"
-            name="endDate"
-            value={education.endDate}
-            onChange={handleEducationChange}
-          />
-        </div>
+<div className="field">
+  <label>End Date:</label>
+  <input
+    type="text"
+    name="endDate"
+    value={education.endDate}
+    onChange={handleEducationChange}
+    placeholder="MM/yyyy"
+  />
+</div>
 
         <div className="field">
           <label>Education Summary:</label>
@@ -262,37 +232,31 @@ function Profile() {
         <h3>Work Experience</h3>
 
         {experiences.map((exp) => (
-          <div key={exp.id} className="experience">
-            <input
-              placeholder="Title"
-              value={exp.title}
-              onChange={(e) =>
-                updateExperience(exp.id, 'title', e.target.value)
-              }
-            />
+            <div key={exp.id} className="experience">
+           <input
+  placeholder="Title"
+  value={exp.title || ''}
+  onChange={(e) => updateExperience(exp.id, 'title', e.target.value)}
+/>
 
-            <input
-              placeholder="Company"
-              value={exp.company}
-              onChange={(e) =>
-                updateExperience(exp.id, 'company', e.target.value)
-              }
-            />
+<input
+  placeholder="Company"
+  value={exp.company || ''}
+  onChange={(e) => updateExperience(exp.id, 'company', e.target.value)}
+/>
 
-            <input
-              placeholder="Location"
-              value={exp.location}
-              onChange={(e) =>
-                updateExperience(exp.id, 'location', e.target.value)
-              }
-            />
+<input
+  placeholder="Location"
+  value={exp.location || ''}
+  onChange={(e) => updateExperience(exp.id, 'location', e.target.value)}
+/>
 
 <div className="form-group">
       <label>Start Date:</label>
       <input
-        type="date"
-        placeholder="Start Date"
-        value={exp.startDate}
+        type="text"
+        placeholder="MM/yyyy"
+        value={exp.startDate || ''}
         onChange={(e) => updateExperience(exp.id, 'startDate', e.target.value)}
       />
     </div>
@@ -300,9 +264,9 @@ function Profile() {
     <div className="form-group">
       <label>End Date:</label>
       <input
-        type="date"
-        placeholder="End Date"
-        value={exp.endDate}
+        type="text"
+        placeholder="MM/yyyy"
+        value={exp.endDate || ''}
         onChange={(e) => updateExperience(exp.id, 'endDate', e.target.value)}
       />
     </div>
