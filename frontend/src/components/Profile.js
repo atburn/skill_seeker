@@ -12,7 +12,6 @@ function Profile() {
   });
 
 
-  const [image, setImage] = useState(null);
 
   const [education, setEducation] = useState({
     school: '',
@@ -110,21 +109,21 @@ function Profile() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          // Add any additional headers if needed (e.g., authentication token)
+          //authentication token
         },
         body: JSON.stringify(profileData),
       });
 
       if (response.ok) {
         console.log('Profile saved successfully!');
-        // You may redirect or perform other actions on success
+        
       } else {
         console.error('Failed to save profile:', response.statusText);
-        // Handle error appropriately
+      
       }
     } catch (error) {
       console.error('Error saving profile:', error.message);
-      // Handle error appropriately
+      
     }
   };
 
@@ -155,16 +154,7 @@ function Profile() {
     <div className="profile">
       <h1>My Profile</h1>
 
-      <div className="section">
-        <h3>Add Profile Picture</h3>
-
-        <div className="picture">
-          {image && <img src={image} alt="Profile" />}
-
-          <button>Upload</button>
-          <input type="file" onChange={handleImageSelect} />
-        </div>
-      </div>
+      
 
       <div className="section">
         <h3>Basic Information</h3>

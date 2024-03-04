@@ -47,3 +47,37 @@
     padding: 5px;
     border-radius: 5px;
 }
+
+.search-bar {
+        position: relative;
+        margin-bottom: 20px; /* Increase margin for spacing */
+    }
+
+    .search-bar input {
+        width: 100%;
+        padding: 15px; /* Increase padding for a larger input */
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-sizing: border-box;
+        margin-top: 5px;
+    }
+
+    .search-bar button {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+        color: #666;
+    }
+
+    .search-bar button:hover {
+        color: #333;
+    }
+
+.search-bar button:hover {
+    color: #333;
+}
