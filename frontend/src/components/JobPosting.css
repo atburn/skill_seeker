@@ -1,9 +1,9 @@
 .job-posting {
-    width: 90%;
-    max-width: 1200px;
+    font-family: Arial, sans-serif;
+    max-width: 800px;
     margin: 20px auto;
     padding: 20px;
-    background: #f4f4f4;
+    background-color: #f4f4f4;
     border-radius: 8px;
 }
 
@@ -11,73 +11,76 @@
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
-    border-radius: 5px;
     border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
-.skills-filter {
-    margin-bottom: 20px;
+.job-posting-results {
+    margin-top: 20px;
 }
 
-.skills-filter label {
-    margin-right: 10px;
+.company-jobs {
+    margin-bottom: 30px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 20px;
 }
 
-.job-posting {
-    background: #fff;
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 5px;
+.company-jobs h2 {
+    color: #333333;
+    margin-bottom: 15px;
 }
 
 .job-posting h3 {
+    color: #555555;
     margin-top: 0;
 }
 
-.job-posting ul {
-    list-style-type: none;
-    padding: 0;
+.job-posting p {
+    color: #666666;
+    margin: 5px 0;
 }
 
-.job-posting li {
-    display: inline;
-    margin-right: 10px;
-    background: #e1e1e1;
-    color: #333;
-    padding: 5px;
-    border-radius: 5px;
+.list-group-item-action {
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.list-group-item-action:hover {
+    background-color: #e8e8e8;
 }
 
 .search-bar {
-        position: relative;
-        margin-bottom: 20px; /* Increase margin for spacing */
-    }
+    position: relative;
+    margin-bottom: 20px; /* Increase margin for spacing */
+}
 
-    .search-bar input {
-        width: 100%;
-        padding: 15px; /* Increase padding for a larger input */
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        box-sizing: border-box;
-        margin-top: 5px;
-    }
+.search-bar input {
+    width: 100%;
+    padding: 15px; /* Increase padding for a larger input */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+    margin-top: 5px;
+}
 
-    .search-bar button {
-        position: absolute;
-        top: 50%;
-        right: 10px;
-        transform: translateY(-50%);
-        background: none;
-        border: none;
-        cursor: pointer;
-        font-size: 14px;
-        color: #666;
-    }
-
-    .search-bar button:hover {
-        color: #333;
-    }
+.search-bar button {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: #666;
+}
 
 .search-bar button:hover {
     color: #333;
+}
+
+.search-bar button:hover {
+color: #333;
 }
