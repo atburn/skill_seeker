@@ -776,7 +776,7 @@ app.post("/jobs/:uid/apply", async (req, res) => {
 
         const company = await Company.findOneAndUpdate(
             { uid: o.companyUID },
-            { $push: { applicants: applicantInfoObject } },
+            { $push: { [`jobs.${jobUID}.applicants`]: applicantInfoObject } },
             { new: true }
         );
 

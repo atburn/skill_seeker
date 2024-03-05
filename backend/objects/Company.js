@@ -6,8 +6,7 @@ const companySchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true },
     summary: { type: String, required: false, default: "" },
-    jobs: { type: Object, required: false, default: {} },
-    applicants: { type: Array, required: false, default: [] }
+    jobs: { type: Object, required: false, default: {} }
 }, { collection: "companies" });
 
 const Company = mongoose.model("Company", companySchema);
