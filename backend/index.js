@@ -82,22 +82,22 @@ app.get("/users", async (req, res) => {
  *      201: Found user
  *          Returns the user found.
  */
-    app.get("/users/:uid", async (req, res) => {
-        try {
-          const uid = req.params.uid;
-          const user = await User.findOne({ uid: uid }); 
-      
-          if (!user) {
+app.get("/users/:uid", async (req, res) => {
+    try {
+        const uid = req.params.uid;
+        const user = await User.findOne({ uid: uid });
+
+        if (!user) {
             res.status(404).json({ error: "No matching user found." });
-          } else {
+        } else {
             res.status(200).json(user);
-          }
-        } catch (error) {
-          console.error(error);
-          res.status(500).json({ error: "Error retrieving user." });
         }
-      });
-    
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error retrieving user." });
+    }
+});
+
 
 /**
  *  POST: Sign up with name, email, and password
@@ -688,6 +688,127 @@ app.get("/jobs", async (req, res) => {
         });
 
         res.status(201).json(o);
+    } catch (error) {
+        console.error(error);
+        res.status(401).json({ error: "Error retriving all jobs" })
+    }
+});
+
+/**
+ *  GET: Get a specific job 
+ *  
+ *  Parameters:
+ *      uid: ID of the job
+ * 
+ *  Example Response Body
+    {
+        "company": "Sample Grocery Store",
+        "uid": "XESuFETTURTK9J1KEuB0RXo2x1X2",
+        "title": "Cashier",
+        "location": "Kent, WA",
+        "description": "Sample description for Cashier"
+    }
+ */
+app.get("/jobs/:uid", async (req, res) => {
+    const jobUID = req.params.uid;
+    try {
+        const companies = await Company.find();
+        let o = null;
+        for (const company of companies) {
+            console.log(company);
+            const job = company.jobs[jobUID];
+            if (job) {
+                o = { company: company.name, uid: company.uid, ...job };
+                res.status(201).json(o);
+                return;
+            }
+        }
+
+        res.status(401).json({ error: "Error retriving all jobs" })
+
+    } catch (error) {
+        console.error(error);
+        res.status(401).json({ error: "Error retriving all jobs" })
+    }
+});
+
+
+/**
+ *  POST: Apply to a specific job
+ * 
+ *  Parameters:
+ *      uid: UID of the job to apply for
+ * 
+ *  Sample Request Body:
+    {
+        "senderUID": "<UID of the user applying to the job>",
+
+
+    }
+ */
+app.post("/jobs/:uid/apply", async (req, res) => {
+    const jobUID = req.params.uid;
+    const userID = req.body.senderUID;
+
+
+    try {
+
+        // Find the company that the job is from
+        const companies = await Company.find();
+        let o = null;
+        for (const company of companies) {
+            const j = company.jobs[jobUID];
+            if (j) {
+                o = { company: company.name, companyUID: company.uid, ...j };
+                break;
+            }
+        }
+
+        if (!o) {
+            res.status(401).json({ Error: "Error finding job with UID: " + jobUID })
+            return;
+        }
+
+        // Store the user data under the job posting
+        const applicantInfoObject = { // currently only storing user id, can store more as needed
+            userID: userID,
+        }
+
+        const company = await Company.findOneAndUpdate(
+            { uid: o.companyUID },
+            { $push: { applicants: applicantInfoObject } },
+            { new: true }
+        );
+
+
+
+
+        const appliedJobObject = {
+            jobID: jobUID,
+            companyUID: o.companyUID,
+            status: "Under Review"
+        }
+
+
+        // Store that the user applied to this job
+        const user = await User.findOneAndUpdate(
+            { uid: userID },
+            { $push: { appliedJobs: appliedJobObject } },
+            { new: true }
+        );
+
+        if (!user) {
+            res.status(401).json({ Error: "Error adding job to user." })
+
+        } else {
+            res.status(201).json({ Success: "Successfully applied to job." })
+
+        }
+
+
+
+
+
     } catch (error) {
         console.error(error);
         res.status(401).json({ error: "Error retriving all jobs" })

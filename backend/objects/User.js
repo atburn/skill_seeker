@@ -9,7 +9,8 @@ const userSchema = new mongoose.Schema({
     title: { type: String, required: false, default: "" },
     summary: { type: String, required: false, default: "" },
     experience: { type: Array, required: false, default: [] },
-    education: { type: Array, required: false, default: [] }
+    education: { type: Array, required: false, default: [] },
+    appliedJobs: { type: Array, required: false, default: [] }
 }, { collection: "users" });
 
 const User = mongoose.model("User", userSchema);

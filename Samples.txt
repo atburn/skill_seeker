@@ -6,7 +6,7 @@ Sample Users:
         title:      Software Developer at Sample Software Company
         summary:    Sample summary for Cassie Watts
         education: 
-            "school":       "University of Texas",
+            "school":       "University of Washington",
             "degree":       "Bachelor of Science",
             "fieldOfStudy": "Computer Science",
             "startDate":    "09/2017",
