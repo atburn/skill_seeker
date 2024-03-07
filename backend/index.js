@@ -10,14 +10,10 @@ const PORT = 2000;
 const app = express(express.json);
 app.use(cors());
 app.use(bodyParser.json());
-// const swaggerJSdoc = require("swagger-jsdoc");
 import swaggerJSdoc from "swagger-jsdoc";
 import swaggerUI from "swagger-ui-express";
-// const swaggerUI = require("swagger-ui-express");
-// const mainRoute = require('./routes/mainRoute');
 import mainRoute from './routes/mainRoute.js';
 import jobRoute from './routes/jobRoute.js';
-// const jobRoute = require('./routes/jobRoute');
 const mongoDBConnectionString =
     "mongodb+srv://skill-seeker-admin:admin@skill-seeker.dbyn3zl.mongodb.net/skill-seeker-db?retryWrites=true&w=majority&appName=skill-seeker";
 mongoose.connect(mongoDBConnectionString);

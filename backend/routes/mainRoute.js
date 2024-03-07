@@ -77,9 +77,7 @@ router.put("/", async (req, res) => {
  *         description: Error message in JSON format (an error has occurred).
  */
 router.post("/", async (req, res) => {
-    // Implement your POST logic here
     try {
-        // Your POST logic
         res.status(201).json({message: 'Resource created successfully.'});
     } catch (error) {
         console.error('Error: ', error);
@@ -102,9 +100,7 @@ router.post("/", async (req, res) => {
  *         description: Error message in JSON format (an error has occurred).
  */
 router.delete("/", async (req, res) => {
-    // Implement your DELETE logic here
     try {
-        // Your DELETE logic
         res.status(204).end();
     } catch (error) {
         console.error('Error: ', error);
