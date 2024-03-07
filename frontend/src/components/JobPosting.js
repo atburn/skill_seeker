@@ -1,70 +1,84 @@
-
-import { useState } from 'react';
-import './JobPosting.css'; 
+import { useState, useEffect } from 'react';
+import './JobPosting.css';
+import axios from 'axios';
 
 function JobPosting() {
     const [searchTerm, setSearchTerm] = useState('');
-    const [skillsFilter, setSkillsFilter] = useState([]);
+    const [jobs, setJobs] = useState({});
+    const [companies, setCompanies] = useState({});
 
-    // Dummy job data
-    const jobs = [
-        { id: 1, title: "Software Engineer", company: "Tech Innovations", skills: ["Java", "Python"] },
-        { id: 2, title: "Data Scientist", company: "DataWiz", skills: ["Python", "R"] },
-        // Add more job listings here
-    ];
+    useEffect(() => {
+        fetchJobs();
+        fetchCompanies();
+    }, []);
+
+    const fetchJobs = async () => {
+        try {
+            const response = await axios.get('http://localhost:2000/jobs');
+            setJobs(response.data);
+        } catch (error) {
+            console.error('Error fetching job information:', error);
+        }
+    };
+
+    const fetchCompanies = async () => {
+        try {
+            const response = await axios.get('http://localhost:2000/companies');
+            const companiesById = response.data.reduce((obj, company) => {
+                obj[company.uid] = company.name; // Store company name by its ID
+                return obj;
+            }, {});
+            setCompanies(companiesById);
+        } catch (error) {
+            console.error('Error fetching companies:', error);
+        }
+    };
 
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
     }
 
-    const handleCheckbox = (skill) => {
-        setSkillsFilter(skillsFilter.includes(skill) ? 
-                        skillsFilter.filter(s => s !== skill) : 
-                        [...skillsFilter, skill]);
-    }
+    const filteredJobs = Object.keys(jobs).reduce((filtered, companyId) => {
+        const companyJobs = jobs[companyId];
 
-    const filteredJobs = jobs.filter(job => 
-        job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        job.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        job.skills.some(skill => skillsFilter.includes(skill))
-    );
+        const filteredCompanyJobs = Object.keys(companyJobs).filter(jobId =>
+            companyJobs[jobId].title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            companyJobs[jobId].location.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            companyJobs[jobId].description.toLowerCase().includes(searchTerm.toLowerCase())
+        ).reduce((obj, jobId) => {
+            obj[jobId] = companyJobs[jobId];
+            return obj;
+        }, {});
+
+        if (Object.keys(filteredCompanyJobs).length > 0) {
+            filtered[companyId] = filteredCompanyJobs;
+        }
+
+        return filtered;
+    }, {});
 
     return (
         <div className="job-posting">
             {/* Search Bar */}
             <input 
                 type="text"
-                placeholder="Search by title, company..."
+                placeholder="Search by title, location, description..."
                 value={searchTerm}
                 onChange={handleSearch}  
             />
 
-            {/* Skills Filter */}
-            <div className="skills-filter">
-                {["Java", "Python", "R"].map(skill => (
-                    <label key={skill}>
-                        <input 
-                            type="checkbox" 
-                            value={skill}
-                            checked={skillsFilter.includes(skill)}
-                            onChange={() => handleCheckbox(skill)}
-                        /> 
-                        {skill}
-                    </label>
-                ))}
-            </div>
-
             {/* Job Posting */}
             <div className="job-posting-results">
-                {filteredJobs.map(job => (
-                    <div key={job.id} className="job-posting">
-                        <h3>{job.title}</h3>
-                        <p>{job.company}</p>
-                        <ul>
-                            {job.skills.map(skill => (
-                                <li key={skill}>{skill}</li>
-                            ))}
-                        </ul>
+                {Object.keys(filteredJobs).map(companyId => (
+                    <div key={companyId} className="company-jobs">
+                        <h2>Company: {companies[companyId] || 'Unknown'}</h2> {/* Display company name */}
+                        {Object.keys(filteredJobs[companyId]).map(jobId => (
+                            <div key={jobId} className="job-posting">
+                                <h3>{filteredJobs[companyId][jobId].title}</h3>
+                                <p>Location: {filteredJobs[companyId][jobId].location}</p>
+                                <p>Description: {filteredJobs[companyId][jobId].description}</p>
+                            </div>
+                        ))}
                     </div>
                 ))}
             </div>

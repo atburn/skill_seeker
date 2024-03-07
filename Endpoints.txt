@@ -30,6 +30,14 @@ Job Postings:
     http://localhost:2000/jobs/
         GET: Get all jobs from all companies
 
+    http://localhost:2000/jobs/{uid}
+        GET: Get a specific job
+
+    http://localhost:2000/jobs/{uid}/apply
+        POST: Apply to a specific job
+
+    
+
 
 
 

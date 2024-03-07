@@ -3,6 +3,7 @@ import './App.css';
 import Home from './components/Home';
 import Header from './components/Header';
 import Jobs from './components/JobPosting';
+import Company from './components/Company';
 import Profile from './components/Profile';
 import LoginRegister from './components/LoginRegister';
 import AboutUs from './components/AboutUs';
@@ -19,6 +20,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/company" element={<Company />} />
         <Route path="/loginregister" element={<LoginRegister />} />
         <Route path="/aboutus" element={<AboutUs />} />
       </Routes>

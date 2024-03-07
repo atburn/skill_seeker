@@ -17,19 +17,17 @@ const LoginRegister = () => {
 
     const handleLogin = async () => {
         try {
-            const uid = await FirebaseAuthHandler.signInUser(email, password);
-            if (uid) {
-                console.log('Logged in with UID:', uid);
-                // Redirect user or show dashboard
-            } else {
-                console.error('Login failed');
-                // Show error message
-            }
+          const uid = await FirebaseAuthHandler.signInUser(email, password);
+          if (uid) {
+            localStorage.setItem('uid', uid);
+            window.location.href = '/profile'; 
+          } else {
+            console.error('Login failed');
+          }
         } catch (error) {
-            console.error('Login error:', error.message);
-            // Show error message
+          console.error('Login error:', error.message);
         }
-    };
+      };
 
     const handleRegister = async () => {
         if (password !== confirmPassword) {
@@ -41,17 +39,15 @@ const LoginRegister = () => {
         try {
             const uid = await FirebaseAuthHandler.createUser(email, password);
             if (uid) {
-                console.log('Registered with UID:', uid);
-                // Redirect user or show welcome message
+              localStorage.setItem('uid', uid);
+              window.location.href = '/profile'; // Redirect to the profile page
             } else {
-                console.error('Registration failed');
-                // Show error message
+              console.error('Registration failed');
             }
-        } catch (error) {
+          } catch (error) {
             console.error('Registration error:', error.message);
-            // Show error message
-        }
-    };
+          }
+        };
 
     const handleForgotPassword = async () => {
         if (email) {
