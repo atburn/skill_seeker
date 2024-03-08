@@ -28,9 +28,9 @@ const APIDocOptions = {
     definition: {
         openapi: '3.0.0',
         info: {
-            title : 'RESTful Skill Seeker API',
+            title: 'RESTful Skill Seeker API',
             description: 'An API for Skill Seeker job index.',
-            version : '1.0.0',
+            version: '1.0.0',
             servers: ['http://localhost:' + PORT]
         },
     },
@@ -47,7 +47,6 @@ app.listen(PORT, () => {
 });
 
 import User from "./objects/User.js";
-
 
 /**
  * GET: Get all users:
@@ -265,6 +264,7 @@ app.put("/users/:uid", async (req, res) => {
 });
 
 import Company from "./objects/Company.js";
+import axios from "axios";
 
 /**
  *      GET: Get all companies:
@@ -592,7 +592,20 @@ app.get("/companies/:uid/jobs/:jobid", async (req, res) => {
         "senderUID": "XESuFETTURTK9J1KEuB0RXo2x1X2",
         "title": "Stocker",
         "location": "Kent, WA",
-        "description": "Sample description for Stocker"
+        "description": "Sample description for Stocker",
+        "responsibilities": "Sample set of responsibilities for a Stocker",
+        "qualifications": "Sample set of qualifications for a Stocker"
+    }
+
+
+    Example Response Body:
+    {
+        "senderUID": "XESuFETTURTK9J1KEuB0RXo2x1X2",
+        "title": "Stocker",
+        "location": "Kent, WA",
+        "description": "Sample description for Stocker",
+        "responsibilities": "Sample set of responsibilities for a Stocker",
+        "qualifications": "Sample set of qualifications for a Stocker"
     }
  */
 app.post("/companies/:uid/jobs", async (req, res) => {
@@ -612,7 +625,9 @@ app.post("/companies/:uid/jobs", async (req, res) => {
         const newJob = {
             title: body.title,
             location: body.location,
-            description: body.description
+            description: body.description,
+            responsibilities: body.responsibilities,
+            qualifications: body.qualifications
         };
         const updatedCompany = await Company.findOneAndUpdate(
             { uid: uid },
@@ -640,7 +655,9 @@ app.post("/companies/:uid/jobs", async (req, res) => {
         "senderUID": "XESuFETTURTK9J1KEuB0RXo2x1X2",
         "title": "Stocker",
         "location": "Kent, WA",
-        "description": "Sample description for Stocker"
+        "description": "Sample description for Stocker",
+        "responsibilities": "Sample set of responsibilities for a Stocker",
+        "qualifications": "Sample set of qualifications for a Stocker"
     }
  */
 app.put("/companies/:uid/jobs/:jobid", async (req, res) => {
@@ -661,7 +678,9 @@ app.put("/companies/:uid/jobs/:jobid", async (req, res) => {
         const newJob = {
             title: body.title,
             location: body.location,
-            description: body.description
+            description: body.description,
+            responsibilities: body.responsibilities,
+            qualifications: body.qualifications
         };
         const updatedCompany = await Company.findOneAndUpdate(
             { uid: uid },
@@ -723,6 +742,82 @@ app.get("/jobs", async (req, res) => {
     }
 });
 
+
+
+
+/**
+ *  GET: Get external jobs based on a query
+ * 
+ */
+app.get("/jobs/external", async (req, res) => {
+
+    if (true) {
+        console.log("CALL TO JSEARCH: 200/MONTH LIMIT DISABLED")
+        res.status(501).json({ Error: "External jobs disabled." })
+    }
+
+
+
+    const options = {
+        method: 'GET',
+        url: 'https://jsearch.p.rapidapi.com/search',
+        params: {
+            query: 'Jobs in US', // THIS QUERY CAN CHANGE
+            page: '1',
+            num_pages: '1'
+        },
+        headers: {
+            'X-RapidAPI-Key': 'd38e356f25msh05bd1a5e0611f46p1d88b2jsnffc3840195d4',
+            'X-RapidAPI-Host': 'jsearch.p.rapidapi.com'
+        }
+    };
+
+    try {
+        const response = await axios.request(options);
+
+        const jobList = response.data.data;
+        const formattedJobs = {}
+        jobList.forEach(o => {
+            formattedJobs[o.job_id] = {
+                company: o.employer_name,
+                title: o.job_title,
+                external_link: o.job_apply_link,
+                description: o.job_description,
+                location: o.job_city + ", " + o.job_state
+            }
+
+            if (o.job_highlights.Responsibilities) {
+                formattedJobs[o.jobID] = {
+                    ...formattedJobs[o.jobID],
+                    responsibilities: o.job_highlights.Responsibilities.join("\n"),
+                }
+            }
+
+            if (o.job_highlights.Qualifications) {
+                formattedJobs[o.jobID] = {
+                    ...formattedJobs[o.jobID],
+                    responsibilities: o.job_highlights.Qualifications.join("\n"),
+                }
+            }
+
+
+        })
+
+
+
+        console.log(formattedJobs)
+
+        res.status(201).json(formattedJobs)
+    } catch (error) {
+        console.error(error);
+        res.status(501).json({ Error: "Could not retrieve external jobs" })
+
+    }
+});
+
+
+
+
 /**
  *  GET: Get a specific job 
  *  
@@ -771,11 +866,9 @@ app.get("/jobs/:uid", async (req, res) => {
  *  Sample Request Body:
     {
         "senderUID": "<UID of the user applying to the job>",
-
-
     }
  */
-app.post("/jobs/:uid/apply", async (req, res) => {
+app.post("/apply/:uid", async (req, res) => {
     const jobUID = req.params.uid;
     const userID = req.body.senderUID;
 
@@ -835,11 +928,11 @@ app.post("/jobs/:uid/apply", async (req, res) => {
         }
 
 
-
-
-
     } catch (error) {
         console.error(error);
         res.status(401).json({ error: "Error retriving all jobs" })
     }
 });
+
+
+

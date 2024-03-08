@@ -1,4 +1,19 @@
-Users:
+Skill Seeker Gmail Account:
+    e: skillseeker.noreply@gmail.com
+    p: skillseeker12
+
+RapidAPI:
+    u: SkillSeeker1
+    e: skillseeker.noreply@gmail.com
+    p: SkillSeeker12.
+
+External Web Services:
+    #1 - Firebase Authentication
+    #2 - MongoDB
+    #3 - JSearch // NOTE: THIS HAS A 200/MONTH LIMIT
+
+
+Web Service #1 - Users:
     http://localhost:2000/users/
         GET: Gets all users
         POST: Create a new user
@@ -8,7 +23,7 @@ Users:
         PUT: Update a specific user
 
 
-Companies:
+Web Service #2 - Companies:
     http://localhost:2000/companies/
         GET: Get all companies
         POST: Create a new company
@@ -26,18 +41,20 @@ Companies:
         PUT: Update a specific job from a specific company
     
 
-Job Postings:
+Web Service #3 - Job Postings:
     http://localhost:2000/jobs/
         GET: Get all jobs from all companies
 
     http://localhost:2000/jobs/{uid}
         GET: Get a specific job
 
-    http://localhost:2000/jobs/{uid}/apply
+    http://localhost:2000/jobs/external
+        GET: Get external jobs 
+
+
+Web Service #4 - Applying
+    http://localhost:2000/apply/{uid}
         POST: Apply to a specific job
-
-    
-
 
 
 
