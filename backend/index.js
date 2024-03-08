@@ -752,8 +752,9 @@ app.get("/jobs", async (req, res) => {
 app.get("/jobs/external", async (req, res) => {
 
     if (true) {
-        console.log("CALL TO JSEARCH: 200/MONTH LIMIT DISABLED")
-        res.status(501).json({ Error: "External jobs disabled." })
+        console.log("CALL TO JSEARCH IS DISABLED TO PREVENT GOING OVER THE 200/MONTH LIMIT");
+        res.status(501).json({ Error: "External jobs disabled." });
+        return;
     }
 
 
@@ -800,10 +801,7 @@ app.get("/jobs/external", async (req, res) => {
                 }
             }
 
-
         })
-
-
 
         console.log(formattedJobs)
 
