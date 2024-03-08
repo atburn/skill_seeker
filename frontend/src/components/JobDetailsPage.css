@@ -1,0 +1,55 @@
+/* JobDetailsPage.css */
+
+.job-details-page {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+}
+
+.job-details-page h2 {
+    color: #333333;
+    margin-bottom: 15px;
+}
+
+.job-details-page p {
+    color: #666666;
+    margin: 10px 0;
+}
+
+.job-details-page .company {
+    font-weight: bold;
+}
+
+.job-details-page .location {
+    font-style: italic;
+}
+
+.job-details-page .description {
+    margin-top: 20px;
+}
+
+.job-details-page .responsibilities {
+    margin-top: 20px;
+}
+
+.job-details-page .qualifications {
+    margin-top: 20px;
+}
+
+.job-details-page .back-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.job-details-page .back-link:hover {
+    background-color: #0056b3;
+}
