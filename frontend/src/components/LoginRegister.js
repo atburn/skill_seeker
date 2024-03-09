@@ -73,11 +73,13 @@ const LoginRegister = () => {
               {!isLogin && (
                   <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm Password" />
               )}
+              
+                
               <div className="agreement-text">
               By clicking "{isLogin ? 'Login' : 'Register'}", you agree to the Skill Seeker <a href="#" className="legal-link">User Agreement</a>, <a href="#" className="legal-link">Privacy Policy</a>, and <a href="#" className="legal-link">Cookie Policy</a>.
               </div>
 
-              <button className="main-action-button">{isLogin ? 'Login' : 'Register'}</button>
+              <button className="main-action-button" onClick={isLogin ? handleLogin : handleRegister}>{isLogin ? 'Login' : 'Register'}</button>
               <div className="or-container">
                 <div className="line"></div>
                 <div className="or-text">or</div>
