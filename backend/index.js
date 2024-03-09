@@ -403,7 +403,9 @@ app.get("/companies/:uid", async (req, res) => {
     {
         "senderUID": "EfGwH1uRqsUlkQAo4L9WjDv5xCP2",
         "email": "testcompany1@email.com",
-        "name": "Sample Engineering Company"
+        "name": "Sample Engineering Company",
+        "location": "Tacoma, WA",
+        "industry": "Engineering"
     }
  * 
  * 
@@ -422,12 +424,16 @@ app.post("/companies", async (req, res) => {
     const uid = req.body.senderUID;
     const email = req.body.email;
     const name = req.body.name;
+    const location = req.body.location;
+    const industry = req.body.industry;
 
     try {
         const company = new Company({
             uid: uid,
             name: name,
             email: email,
+            location: location,
+            industry: industry,
             summary: "",
         });
         await company.save();
@@ -449,7 +455,9 @@ app.post("/companies", async (req, res) => {
         "senderUID": "XESuFETTURTK9J1KEuB0RXo2x1X2",
         "email": "testcompany2@email.com",
         "name": "Sample Grocery Store",
-        "summary": "Sample summary for the Sample Grocery Store"
+        "summary": "Sample summary for the Sample Grocery Store",
+        "location": "Kent, WA",
+        "industry": "Retail"
     }
  * 
  * 
@@ -459,6 +467,8 @@ app.post("/companies", async (req, res) => {
         "uid": "XESuFETTURTK9J1KEuB0RXo2x1X2",
         "name": "Sample Grocery Store",
         "email": "testcompany2@email.com",
+        "location": "Kent, WA",
+        "industry": "Retail",
         "summary": "Sample summary for the Sample Grocery Store",
         "__v": 0,
         "jobs": {
@@ -494,6 +504,8 @@ app.put("/companies/:uid", async (req, res) => {
     const name = body.name;
     const email = body.email;
     const summary = body.summary;
+    const location = body.location;
+    const industry = body.industry;
 
     try {
         const company = {
@@ -501,6 +513,8 @@ app.put("/companies/:uid", async (req, res) => {
             name: name,
             email: email,
             summary: summary,
+            location: location,
+            industry: industry
         };
         const updatedCompany = await Company.findOneAndUpdate(
             { uid: companyToModify },
