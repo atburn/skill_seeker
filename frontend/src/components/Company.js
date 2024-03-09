@@ -1,68 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Company.css';
 
-function Company() {
-    const [jobTitle, setJobTitle] = useState('');
-    const [location, setLocation] = useState('');
-    const [description, setDescription] = useState('');
+const Company = () => {
+    const [companies, setCompanies] = useState([]);
+    const [selectedCompany, setSelectedCompany] = useState(null);
+    const [jobs, setJobs] = useState([]);
 
-    const handleSubmit = async (event) => {
-        event.preventDefault(); // Prevent default form submission behavior
-        const jobData = {
-            title: jobTitle,
-            location: location,
-            description: description,
+    // Fetch all companies
+    useEffect(() => {
+        const fetchCompanies = async () => {
+            const result = await axios('http://localhost:2000/companies/');
+            setCompanies(result.data);
         };
-        
-        try {
-            const response = await axios.post('http://localhost:2000/companies/{companyId}/jobs', jobData);
-            console.log(response.data);
-            alert('Job posted successfully!');
-            // Clear form fields after submission
-            setJobTitle('');
-            setLocation('');
-            setDescription('');
-        } catch (error) {
-            console.error('Error posting job:', error);
-            alert('Error posting job.');
-        }
+
+        fetchCompanies();
+    }, []);
+
+    // Fetch a specific company
+    const fetchCompany = async (uid) => {
+        const result = await axios(`http://localhost:2000/companies/${uid}`);
+        setSelectedCompany(result.data);
+        fetchJobs(uid); // Fetch jobs for the selected company
+    };
+
+    // Fetch all jobs from a specific company
+    const fetchJobs = async (uid) => {
+        const result = await axios(`http://localhost:2000/companies/${uid}/jobs`);
+        setJobs(Array.isArray(result.data) ? result.data : []);
     };
 
     return (
-        <div className="company-form">
-            <h2>Post a Job Opening</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label>Job Title</label>
-                    <input 
-                        type="text" 
-                        value={jobTitle} 
-                        onChange={(e) => setJobTitle(e.target.value)} 
-                        required 
-                    />
+        <div>
+            <h1>Companies</h1>
+            <ul>
+                {companies.map((company) => (
+                    <li key={company.uid} onClick={() => fetchCompany(company.uid)}>
+                        {company.name}
+                    </li>
+                ))}
+            </ul>
+
+            {selectedCompany && (
+                <div>
+                    <h2>{selectedCompany.name}</h2>
+                    <p>{selectedCompany.description}</p>
+                    <h3>Jobs</h3>
+                    {Array.isArray(jobs) && jobs.length > 0 && (
+                        <ul>
+                            {jobs.map((job) => (
+                                <li key={job.jobid}>{job.title}</li>
+                             ))}
+                        </ul>
+            )}
                 </div>
-                <div className="form-group">
-                    <label>Location</label>
-                    <input 
-                        type="text" 
-                        value={location} 
-                        onChange={(e) => setLocation(e.target.value)} 
-                        required 
-                    />
-                </div>
-                <div className="form-group">
-                    <label>Description</label>
-                    <textarea 
-                        value={description} 
-                        onChange={(e) => setDescription(e.target.value)} 
-                        required 
-                    ></textarea>
-                </div>
-                <button type="submit">Post Job</button>
-            </form>
+            )}
         </div>
     );
-}
+};
 
 export default Company;
