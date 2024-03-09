@@ -74,14 +74,15 @@ const LoginRegister = () => {
                   <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm Password" />
               )}
               <div className="agreement-text">
-                  By clicking {isLogin ? '"Login"' : '"Register"'}, you agree to the Skill Seeker User Agreement, Privacy Policy, and Cookie Policy.
+              By clicking "{isLogin ? 'Login' : 'Register'}", you agree to the Skill Seeker <a href="#" className="legal-link">User Agreement</a>, <a href="#" className="legal-link">Privacy Policy</a>, and <a href="#" className="legal-link">Cookie Policy</a>.
               </div>
-              <button className="main-action-button" onClick={isLogin ? handleLogin : handleRegister}>
-                  {isLogin ? 'Login' : 'Register'}
-              </button>
-              <div className="alternative-section">
-                  <hr className="divider" />
-                  <div className="or">or</div>
+
+              <button className="main-action-button">{isLogin ? 'Login' : 'Register'}</button>
+              <div className="or-container">
+                <div className="line"></div>
+                <div className="or-text">or</div>
+                <div className="line"></div>
+              
                   <button className="google-signin-button">Continue with Google</button>
               </div>
               {isLogin ? (

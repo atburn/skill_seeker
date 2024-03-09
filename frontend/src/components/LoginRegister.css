@@ -11,8 +11,8 @@
   padding: 40px;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  width: 340px; /* Adjusted for better fit */
-  position: relative; /* For positioning the 'or' div correctly */
+  width: 340px; 
+  position: relative; 
 }
 
 .login-register-card h2 {
@@ -39,13 +39,13 @@
   border-radius: 20px;
   cursor: pointer;
   font-size: 16px;
-  margin-bottom: 16px; /* Added margin for spacing */
+  margin-bottom: 16px; 
 }
 
 .agreement-text {
   text-align: center;
   font-size: 12px;
-  margin-bottom: 16px; /* Adjust based on your design */
+  margin-bottom: 16px; 
 }
 
 .google-signin-button {
@@ -57,7 +57,7 @@
   border-radius: 20px;
   cursor: pointer;
   font-size: 16px;
-  margin-bottom: 16px; /* Added margin for spacing */
+  margin-bottom: 16px; 
 }
 
 .redirect-section {
@@ -72,9 +72,26 @@
 }
 
 .divider {
-  display: none; /* Hide the divider as it is not in the screenshot */
+  display: none; 
 }
 
 .or-section {
-  display: none; /* Hide the 'or' section as it is not in the screenshot */
+  display: none; 
+}
+
+.agreement-text {
+  text-align: center;
+  font-size: 12px;
+  margin-top: 20px; 
+  margin-bottom: 20px; 
+  color: #666; 
+}
+
+.legal-link {
+  color: #0073b1; 
+  text-decoration: none; 
+}
+
+.legal-link:hover {
+  text-decoration: underline; 
 }
