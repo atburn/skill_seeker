@@ -15,11 +15,40 @@ function JobDetails({ job, onClose }) {
     );
 }
 
+function JobApplicationForm({ job, onSubmit, onInputChange, onFileChange }) {
+    return (
+        <div className="job-application-container">
+            <h1>Apply for {job.title}</h1>
+            <form onSubmit={onSubmit} className="job-application-form">
+                <div className="form-group">
+                    <label className="form-label">Name:</label>
+                    <input type="text" name="name" onChange={onInputChange} className="form-input" />
+                </div>
+                <div className="form-group">
+                    <label className="form-label">Email:</label>
+                    <input type="email" name="email" onChange={onInputChange} className="form-input" />
+                </div>
+                <div className="form-group">
+                    <label className="form-label">Resume (PDF only):</label>
+                    <input type="file" name="resume" onChange={onFileChange} accept=".pdf" className="form-input" />
+                </div>
+                <button type="submit" className="submit-btn">Submit Application</button>
+            </form>
+        </div>
+    );
+}
+
 function JobPosting() {
     const [searchTerm, setSearchTerm] = useState('');
     const [jobs, setJobs] = useState({});
     const [companies, setCompanies] = useState({});
     const [selectedJob, setSelectedJob] = useState(null);
+    const [isApplying, setIsApplying] = useState(false);
+    const [applicantData, setApplicantData] = useState({
+        name: '',
+        email: '',
+        resume: null,
+    });
 
     useEffect(() => {
         fetchJobs();
@@ -54,11 +83,46 @@ function JobPosting() {
 
     const handleViewJob = (job) => {
         setSelectedJob(job);
+        setIsApplying(false);
     }
 
     const handleCloseJob = () => {
         setSelectedJob(null);
     }
+
+    const handleApply = (job) => {
+        setSelectedJob(job);
+        setIsApplying(true);
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setApplicantData({ ...applicantData, [name]: value });
+    };
+
+    const handleFileChange = (e) => {
+        setApplicantData({ ...applicantData, resume: e.target.files[0] });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('name', applicantData.name);
+        formData.append('email', applicantData.email);
+        formData.append('resume', applicantData.resume);
+        formData.append('position', selectedJob.title); // Assuming job title is used as position
+
+        try {
+            const response = await axios.post('http://localhost:2000/apply', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+            });
+            console.log(response.data);
+            setIsApplying(false); // Close form upon submission
+            alert('Application submitted successfully!');
+        } catch (error) {
+            console.error('Application submission error:', error);
+        }
+    };
 
     const filteredJobs = Object.keys(jobs).reduce((filtered, companyId) => {
         const companyJobs = jobs[companyId];
@@ -97,7 +161,11 @@ function JobPosting() {
                                 <h3>{filteredJobs[companyId][jobId].title}</h3>
                                 <p>Location: {filteredJobs[companyId][jobId].location}</p>
                                 <p>Description: {filteredJobs[companyId][jobId].description}</p>
-                                <Link to={`/jobs/${jobId}`}>View</Link>
+                                <div className="job-actions">
+                                    <Link to={`/jobs/${jobId}`} className="view-button">View</Link>
+                                    <Link to={`/apply/${jobId}`} className="apply-button">Apply</Link>
+                                </div>
+
                             </div>
                         ))}
                     </div>
@@ -105,6 +173,7 @@ function JobPosting() {
             </div>
 
             {selectedJob && <JobDetails job={selectedJob} onClose={handleCloseJob} />}
+            
         </div>
     );
 }
