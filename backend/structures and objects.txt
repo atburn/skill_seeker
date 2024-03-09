@@ -34,31 +34,13 @@ OBJECTS:
 				title: string
 				company: string
 				location: string
-				salary: number
+				description: string
+				responsibilities: string
+				qualifications: string
 			}
 
 		}
 
 
 
-
-
-
-DATABASE
-
-root 
-	users
-		<user uid>: string
-			title: string
-			summary: summary
-			education: Education[]
-			experience: Experience[]
-				
-
-	companies
-		<company uid> string
-			uid: string
-			name: string
-			summary: string
-			employees: user[]
 		

@@ -1,45 +1,5 @@
 import express from "express";
 const router = express.Router();
-import cors from 'cors';
-
-import Company from "./../objects/Company.js";
-//
-// // GET all job postings
-// router.get("/", async (req, res) => {
-//     try {
-//         const companies = await Company.find();
-//         let allJobs = {};
-//         companies.forEach(company => {
-//             Object.assign(allJobs, company.jobs);
-//         });
-//         res.status(200).json(allJobs);
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ error: "Error retrieving job postings." });
-//     }
-// });
-//
-// // GET a specific job posting by ID
-// router.get("/:jobid", async (req, res) => {
-//     const jobid = req.params.jobid;
-//     try {
-//         const companies = await Company.find();
-//         let foundJob = null;
-//         companies.forEach(company => {
-//             if (company.jobs[jobid]) {
-//                 foundJob = company.jobs[jobid];
-//             }
-//         });
-//         if (foundJob) {
-//             res.status(200).json({ [jobid]: foundJob });
-//         } else {
-//             res.status(404).json({ error: "Job posting not found." });
-//         }
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ error: "Error retrieving job posting." });
-//     }
-// });
 
 /**
  * @swagger
@@ -90,7 +50,6 @@ router.get("/companies", async (req, res) => {
  */
 router.put("/companies/:id", async (req, res) => {
     const companyId = req.params.id;
-    // Implement your PUT logic here
 });
 
 /**
@@ -108,7 +67,6 @@ router.put("/companies/:id", async (req, res) => {
  *         description: Error message in JSON format (an error has occurred).
  */
 router.post("/companies", async (req, res) => {
-    // Implement your POST logic here
 });
 
 /**
@@ -136,7 +94,6 @@ router.post("/companies", async (req, res) => {
  */
 router.delete("/companies/:id", async (req, res) => {
     const companyId = req.params.id;
-    // Implement your DELETE logic here
 });
 
 export default router;

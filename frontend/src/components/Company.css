@@ -1,53 +1,64 @@
-.company-form {
-    max-width: 500px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
 }
 
-.company-form h2 {
-    margin-bottom: 20px;
-    text-align: center;
+h1, h2, h3 {
     color: #333;
 }
 
-.form-group {
-    margin-bottom: 15px;
+ul {
+    list-style-type: none;
+    padding: 0;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    color: #666;
-}
-
-.form-group input[type="text"],
-.form-group textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
+li {
+    padding: 8px;
+    margin: 5px 0;
+    background-color: white;
     border-radius: 4px;
-    box-sizing: border-box; 
-}
-
-.form-group textarea {
-    height: 100px; 
-    resize: vertical;  
-}
-
-button[type="submit"] {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    background-color: #4CAF50;
-    color: white;
     cursor: pointer;
-    font-size: 16px;
+    border: 1px solid #ddd;
 }
 
-button[type="submit"]:hover {
-    background-color: #45a049;
+li:hover {
+    background-color: #f0f0f0;
+}
+
+.company-list {
+    width: 30%;
+    float: left;
+    padding: 20px;
+}
+
+.company-details {
+    width: 65%;
+    float: right;
+    padding: 20px;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.company-details h2 {
+    margin-top: 0;
+}
+
+.job-list {
+    margin-top: 20px;
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+@media screen and (max-width: 600px) {
+    .company-list, .company-details {
+        width: 100%;
+        float: none;
+    }
 }

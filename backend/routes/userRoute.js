@@ -52,7 +52,6 @@ router.get("/users", async (req, res) => {
  */
 router.put("/users/:id", async (req, res) => {
     const userId = req.params.id;
-    // Implement your PUT logic here
 });
 
 /**
@@ -70,7 +69,6 @@ router.put("/users/:id", async (req, res) => {
  *         description: Error message in JSON format (an error has occurred).
  */
 router.post("/users", async (req, res) => {
-    // Implement your POST logic here
 });
 
 /**
@@ -98,7 +96,6 @@ router.post("/users", async (req, res) => {
  */
 router.delete("/users/:id", async (req, res) => {
     const userId = req.params.id;
-    // Implement your DELETE logic here
 });
 
 export default router;

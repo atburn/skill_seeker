@@ -84,3 +84,26 @@
 .search-bar button:hover {
 color: #333;
 }
+
+.view-button,
+.apply-button {
+    text-decoration: none;
+    padding: 10px 20px; 
+    border-radius: 5px; 
+    font-size: 14px; 
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    margin-right: 10px; 
+    display: inline-block; 
+    background-color: #4CAF50; 
+    color: white; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2); 
+}
+
+.view-button:hover,
+.apply-button:hover {
+    background-color: #45a049; 
+    color: white; 
+    text-decoration: none; 
+}

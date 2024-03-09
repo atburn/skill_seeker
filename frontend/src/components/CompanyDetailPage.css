@@ -1,0 +1,17 @@
+.company-detail-page {
+    width: 80%;
+    margin: 20px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.company-detail-page h1 {
+    color: #333;
+}
+
+.company-detail-page p {
+    margin: 10px 0;
+    line-height: 1.6;
+}
