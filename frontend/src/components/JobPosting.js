@@ -15,7 +15,7 @@ function JobDetails({ job, onClose }) {
     );
 }
 
-function JobApplicationForm({ job, onSubmit, onInputChange, onFileChange }) {
+function JobApplicationForm({ job, onSubmit, onInputChange, handleInputChange, onFileChange }) {
     return (
         <div className="job-application-container">
             <h1>Apply for {job.title}</h1>
@@ -27,6 +27,14 @@ function JobApplicationForm({ job, onSubmit, onInputChange, onFileChange }) {
                 <div className="form-group">
                     <label className="form-label">Email:</label>
                     <input type="email" name="email" onChange={onInputChange} className="form-input" />
+                </div>
+                <div className="form-group">
+                    <label className="form-label">Qualifications:</label>
+                    <input type="textarea" name="qualifications" onChange={handleInputChange} className="form-input" />
+                </div>
+                <div className="form-group">
+                    <label className="form-label">Responsibilities:</label>
+                    <input type="textarea" name="responsibilities" onChange={handleInputChange} className="form-input" />
                 </div>
                 <div className="form-group">
                     <label className="form-label">Resume (PDF only):</label>
@@ -47,6 +55,8 @@ function JobPosting() {
     const [applicantData, setApplicantData] = useState({
         name: '',
         email: '',
+        qualifications: '',
+        responsibilities: '',
         resume: null,
     });
 
@@ -109,6 +119,8 @@ function JobPosting() {
         const formData = new FormData();
         formData.append('name', applicantData.name);
         formData.append('email', applicantData.email);
+        formData.append('qualifications', applicantData.qualifications);
+        formData.append('responsibilities', applicantData.responsibilities);
         formData.append('resume', applicantData.resume);
         formData.append('position', selectedJob.title); // Assuming job title is used as position
 
