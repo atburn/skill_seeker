@@ -1,0 +1,39 @@
+.job-list-container {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.job-list-container h3 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.job-list-container ul {
+    list-style: none;
+    padding: 0;
+}
+
+.job-list-container li {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.job-list-container li:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.job-list-container h4 {
+    margin: 0 0 5px 0;
+    color: #007bff; /* Change this to match your site's theme */
+}
+
+.job-list-container p {
+    margin: 0;
+    color: #666;
+}
