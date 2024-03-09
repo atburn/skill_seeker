@@ -3,59 +3,78 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(to right, #ff758c, #ff7eb3);
+  background-color: #f3f2ef;
 }
 
 .login-register-card {
-  background: white;
-  padding: 50px;
-  border-radius: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 300px;
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  width: 340px; /* Adjusted for better fit */
+  position: relative; /* For positioning the 'or' div correctly */
 }
 
 .login-register-card h2 {
-  color: #333;
+  color: #2977c9;
   margin-bottom: 20px;
   text-align: center;
 }
 
 .login-register-card input {
   width: 100%;
-  padding: 10px;
-  margin-bottom: 20px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  box-sizing: border-box; /* Added for input width consistency */
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 16px;
 }
 
-.login-register-card button {
+.main-action-button {
+  width: 100%;
+  padding: 15px;
+  background-color: #2977c9;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 16px; /* Added margin for spacing */
+}
+
+.agreement-text {
+  text-align: center;
+  font-size: 12px;
+  margin-bottom: 16px; /* Adjust based on your design */
+}
+
+.google-signin-button {
+  background-color: #fff;
+  color: #757575;
   width: 100%;
   padding: 10px;
-  background-color: #ff758c;
-  border: none;
-  border-radius: 10px;
-  color: white;
+  border: 2px solid #ccc;
+  border-radius: 20px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-size: 16px;
+  margin-bottom: 16px; /* Added margin for spacing */
 }
 
-.login-register-card button:hover {
-  background-color: #ff7eb3;
-}
-
-.login-register-card p {
+.redirect-section {
   text-align: center;
-  color: #666;
+  margin-top: 16px;
 }
 
-.login-register-card span {
-  color: #ff758c;
+.redirect-section span {
+  color: #2977c9;
   cursor: pointer;
+  font-weight: 600;
 }
 
-/* Additional styling for 'New User?' and 'Already have an account?' */
-.login-register-card p span:hover {
-  text-decoration: underline;
+.divider {
+  display: none; /* Hide the divider as it is not in the screenshot */
 }
 
+.or-section {
+  display: none; /* Hide the 'or' section as it is not in the screenshot */
+}

@@ -59,30 +59,43 @@ const LoginRegister = () => {
     };
 
     return (
-        <div className="login-register-container">
-            <div className="login-register-card">
-                <h2>{isLogin ? 'Login' : 'Register'}</h2>
-                {!isLogin && (
-                    <>
-                        <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder="First Name" />
-                        <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} placeholder="Last Name" />
-                    </>
-                )}
-                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
-                {!isLogin && <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm Password" />}
-                <button onClick={isLogin ? handleLogin : handleRegister}>{isLogin ? 'Login' : 'Register'}</button>
-                {isLogin ? (
-                    <div>
-                        <p>New user? <span onClick={() => setIsLogin(false)}>Register here!</span></p>
-                        <p><span onClick={handleForgotPassword}>Forgot Password?</span></p>
-                    </div>
-                ) : (
-                    <p>Already have an account? <span onClick={() => setIsLogin(true)}>Log in!</span></p>
-                )}
-            </div>
-        </div>
-    );
-};
+      <div className="login-register-container">
+          <div className="login-register-card">
+              <h2>{isLogin ? 'Login to Skill Seeker' : 'Join Skill Seeker'}</h2>
+              {!isLogin && (
+                  <div className="name-fields">
+                      <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder="First Name" />
+                      <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} placeholder="Last Name" />
+                  </div>
+              )}
+              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password (6+ characters)" />
+              {!isLogin && (
+                  <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm Password" />
+              )}
+              <div className="agreement-text">
+                  By clicking {isLogin ? '"Login"' : '"Register"'}, you agree to the Skill Seeker User Agreement, Privacy Policy, and Cookie Policy.
+              </div>
+              <button className="main-action-button" onClick={isLogin ? handleLogin : handleRegister}>
+                  {isLogin ? 'Login' : 'Register'}
+              </button>
+              <div className="alternative-section">
+                  <hr className="divider" />
+                  <div className="or">or</div>
+                  <button className="google-signin-button">Continue with Google</button>
+              </div>
+              {isLogin ? (
+                  <div className="redirect-section">
+                      <p>New to Skill Seeker? <span onClick={() => setIsLogin(false)}>Register here!</span></p>
+                      <p><span onClick={handleForgotPassword}>Forgot Password?</span></p>
+                  </div>
+              ) : (
+                  <p className="redirect-section">Already have an account? <span onClick={() => setIsLogin(true)}>Log in!</span></p>
+              )}
+          </div>
+      </div>
+  );  
+  
+}  
 
 export default LoginRegister;
