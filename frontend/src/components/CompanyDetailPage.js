@@ -27,9 +27,10 @@ function CompanyDetailPage() {
     return (
         <div className="company-detail-page">
             <h1>{company.name}</h1>
-            <p><strong>Location:</strong> {company.location}</p>
-            <p><strong>Description:</strong> {company.description}</p>
             <p><strong>Industry:</strong> {company.industry}</p>
+            <p><strong>Location:</strong> {company.location}</p>
+            <p><strong>Email:</strong> {company.email}</p>
+            <p><strong>Description:</strong> {company.summary}</p>
             <br></br>
             <Link to="/company">Back to Main Companies Page</Link>
         </div>
