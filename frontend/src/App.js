@@ -11,6 +11,7 @@ import JobDetailsPage from './components/JobDetailsPage';
 import CompanyDetailPage from './components/CompanyDetailPage';
 import JobList from './components/JobList';
 import JobApplicationForm from './components/JobApplicationForm';
+import ViewProfile from './components/ViewProfile';
 import axios from 'axios';
 import { Routes, Route } from 'react-router-dom';
 
@@ -31,6 +32,7 @@ function App() {
         <Route path="/company" element={<Company />} />
         <Route path="/loginregister" element={<LoginRegister />} />
         <Route path="/aboutus" element={<AboutUs />} />
+        <Route path="/view-profile" element={<ViewProfile />} />
       </Routes>
     </>
   ) 
