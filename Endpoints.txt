@@ -1,3 +1,33 @@
+Backend Requirements:
+    8 total Web-Services:
+        #1 - Users
+        #2 - 
+
+    4 web services that use custom headers:
+        #1 - Users (checks "sender-uid" header)
+        #2 - Companies (checks "sender-uid" header)
+        #3 - 
+        #4 - 
+
+    2 web services that use GET, POST, PUT, DELETE:
+        #1 - Users
+            GET: Gets all users or a specific user
+            POST: Creates a user
+            PUT: Updates a user
+            DELETE: Deletes a user
+
+        #2 - Companies
+            GET: Get all companies or a specific company
+            POST: Create a new company
+            PUT: Updates a company
+            DELETE: Deletes a company
+
+
+    2 web services with second-order composition
+
+
+
+
 Skill Seeker Gmail Account:
     e: skillseeker.noreply@gmail.com
     p: skillseeker12
@@ -21,6 +51,7 @@ Web Service #1 - Users:
     http://localhost:2000/users/{uid}
         GET: Get a specific user
         PUT: Update a specific user
+        DELETE: Delete a specific user
 
 
 Web Service #2 - Companies:
@@ -56,7 +87,9 @@ Web Service #4 - Applying
     http://localhost:2000/apply/{uid}
         POST: Apply to a specific job
 
-
+Web Service #5 - Searcj
+    http://localhost:2000/search/{users/companies/jobs}/{name}
+        GET: Search for things by name
 
 Authetication Process:
     1. Call FirebaseAuthHandler.signInUser and provide necessary arguments
