@@ -13,10 +13,12 @@ function Header() {
       <div style={{ width: "50%", textAlign: 'right' }}>
       <nav className='header-nav'>
         <Link to="/">Home</Link>
+        <Link to="/loginregister">Login/Register</Link>
+        <Link to="/view-profile">Profile</Link>
+       
         <Link to="/jobs">Jobs Posting</Link>  
         <Link to="/company">Company</Link>
-        <Link to="/view-profile">Profile</Link>
-        <Link to="/loginregister">Login/Register</Link>
+        
         <Link to="/aboutus">About Us</Link>
       </nav>
       </div>
