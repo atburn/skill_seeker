@@ -20,7 +20,7 @@ const LoginRegister = () => {
           const uid = await FirebaseAuthHandler.signInUser(email, password);
           if (uid) {
             localStorage.setItem('uid', uid);
-            window.location.href = '/profile'; 
+            window.location.href = '/view-profile'; 
           } else {
             console.error('Login failed');
           }

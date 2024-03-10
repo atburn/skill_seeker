@@ -29,14 +29,6 @@ function JobApplicationForm({ job, onSubmit, onInputChange, handleInputChange, o
                     <input type="email" name="email" onChange={onInputChange} className="form-input" />
                 </div>
                 <div className="form-group">
-                    <label className="form-label">Qualifications:</label>
-                    <input type="textarea" name="qualifications" onChange={handleInputChange} className="form-input" />
-                </div>
-                <div className="form-group">
-                    <label className="form-label">Responsibilities:</label>
-                    <input type="textarea" name="responsibilities" onChange={handleInputChange} className="form-input" />
-                </div>
-                <div className="form-group">
                     <label className="form-label">Resume (PDF only):</label>
                     <input type="file" name="resume" onChange={onFileChange} accept=".pdf" className="form-input" />
                 </div>
@@ -119,8 +111,6 @@ function JobPosting() {
         const formData = new FormData();
         formData.append('name', applicantData.name);
         formData.append('email', applicantData.email);
-        formData.append('qualifications', applicantData.qualifications);
-        formData.append('responsibilities', applicantData.responsibilities);
         formData.append('resume', applicantData.resume);
         formData.append('position', selectedJob.title); // Assuming job title is used as position
 

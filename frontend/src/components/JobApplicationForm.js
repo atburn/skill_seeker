@@ -13,8 +13,6 @@ function JobApplicationForm() {
     const [applicantData, setApplicantData] = useState({
         name: '',
         email: '',
-        qualifications: '',
-        responsibilities: '',
         resume: null,
     });
 
@@ -44,8 +42,6 @@ function JobApplicationForm() {
         const formData = new FormData();
         formData.append('name', applicantData.name);
         formData.append('email', applicantData.email);
-        formData.append('qualifications', applicantData.qualifications);
-        formData.append('responsibilities', applicantData.responsibilities);
         formData.append('resume', applicantData.resume);
         try {
             await axios.post('http://localhost:2000/apply', formData, {
@@ -69,14 +65,6 @@ function JobApplicationForm() {
                 <div className="form-group">
                     <label>Email:</label>
                     <input type="email" name="email" value={applicantData.email} onChange={handleInputChange} required />
-                </div>
-                <div className="form-group">
-                    <label>Qualifications:</label>
-                    <textarea name="qualifications" value={applicantData.qualifications} onChange={handleInputChange} required />
-                </div>
-                <div className="form-group">
-                    <label>Responsibilities:</label>
-                    <textarea name="responsibilities" value={applicantData.responsibilities} onChange={handleInputChange} required />
                 </div>
                 <div className="form-group">
                     <label>Resume (PDF only):</label>

@@ -5,6 +5,8 @@ const companySchema = new mongoose.Schema({
     uid: { type: String, required: true },
     name: { type: String, required: true },
     email: { type: String, required: true },
+    location: { type: String, required: true },
+    industry: { type: String, required: true },
     summary: { type: String, required: false, default: "" },
     jobs: { type: Object, required: false, default: {} }
 }, { collection: "companies" });
