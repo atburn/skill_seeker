@@ -110,21 +110,38 @@ app.get("/users", async (req, res) => {
  *      201: Found user
  *          Returns the user found.
  */
-app.get("/users/:uid", async (req, res) => {
-    try {
-        const uid = req.params.uid;
-        const user = await User.findOne({ uid: uid });
-
-        if (!user) {
+    app.get("/users/:uid", async (req, res) => {
+        try {
+          const uid = req.params.uid;
+          const user = await User.findOne({ uid: uid });
+      
+          if (!user) {
             res.status(404).json({ error: "No matching user found." });
-        } else {
-            res.status(200).json(user);
+          } else {
+            // Fetch job details for each applied job
+            const appliedJobsWithDetails = await Promise.all(
+              user.appliedJobs.map(async (job) => {
+                const company = await Company.findOne({ uid: job.companyUID });
+                const jobDetails = company.jobs[job.jobID];
+                return {
+                  ...job,
+                  title: jobDetails.title,
+                  company: company.name,
+                };
+              })
+            );
+      
+            // Include the applied jobs with details in the response
+            res.status(200).json({
+              ...user.toObject(),
+              appliedJobs: appliedJobsWithDetails,
+            });
+          }
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({ error: "Error retrieving user." });
         }
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Error retrieving user." });
-    }
-});
+      });
 
 
 /**
@@ -1035,3 +1052,4 @@ app.get("/search/:type/:name", async (req, res) => {
     }
 
 });
+

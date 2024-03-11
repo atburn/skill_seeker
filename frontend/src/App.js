@@ -14,7 +14,7 @@ import JobApplicationForm from './components/JobApplicationForm';
 import ViewProfile from './components/ViewProfile';
 import axios from 'axios';
 import { Routes, Route } from 'react-router-dom';
-
+import Logout from './components/Logout';
 function App() {
 
   return (
@@ -33,6 +33,8 @@ function App() {
         <Route path="/loginregister" element={<LoginRegister />} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/view-profile" element={<ViewProfile />} />
+        <Route path="/logout" element={<Logout />} />
+        
       </Routes>
     </>
   ) 
