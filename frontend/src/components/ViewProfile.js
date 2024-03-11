@@ -75,6 +75,19 @@ const ViewProfile = () => {
           </div>
         ))}
       </div>
+
+      <div className="section">
+  <h3>Applied Jobs</h3>
+  {user.appliedJobs.map((job, index) => (
+    <div key={index} className="applied-job">
+      <h4>{job.title}</h4>
+      <p>{job.company}</p>
+      <p>Status: {job.status}</p>
+    </div>
+  ))}
+</div>
+
+
       <button className="button" onClick={handleEditProfile}>
           Edit Profile
         </button>

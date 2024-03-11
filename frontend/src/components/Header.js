@@ -20,6 +20,8 @@ function Header() {
         <Link to="/company">Company</Link>
         
         <Link to="/aboutus">About Us</Link>
+        <Link to="/logout">Log Out</Link>
+        
       </nav>
       </div>
     </div>
