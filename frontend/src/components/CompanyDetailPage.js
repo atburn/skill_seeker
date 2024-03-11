@@ -20,7 +20,7 @@ function CompanyDetailPage() {
                 const a = [];
                 for (const jobUID in jobsResponse.data) {
                     a.push({
-                        ...jobsResponse.data[jobUID]
+                        ...jobsResponse.data[jobUID], jobUID: jobUID
                     })
                 }
 
@@ -49,10 +49,10 @@ function CompanyDetailPage() {
                 <ul>
                     {jobs.map(job => {
                         return (
-                            <li key={job.jobId}>
+                            <li key={job.jobUID}>
                                 <h3>{job.title}</h3>
                                 <p>{job.description}</p>
-                                <Link to={`/jobs/${job.jobIdd}`}>View</Link>
+                                <Link to={`/jobs/${job.jobUID}`}>View</Link>
                             </li>
                         )
                     })
