@@ -80,13 +80,7 @@ const LoginRegister = () => {
               </div>
 
               <button className="main-action-button" onClick={isLogin ? handleLogin : handleRegister}>{isLogin ? 'Login' : 'Register'}</button>
-              <div className="or-container">
-                <div className="line"></div>
-                <div className="or-text">or</div>
-                <div className="line"></div>
-              
-                  <button className="google-signin-button">Continue with Google</button>
-              </div>
+             
               {isLogin ? (
                   <div className="redirect-section">
                       <p>New to Skill Seeker? <span onClick={() => setIsLogin(false)}>Register here!</span></p>
