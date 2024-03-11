@@ -89,6 +89,8 @@ function JobPosting() {
                     query: searchTerm
                 }
             });
+            console.log("external")
+            console.log(response.data)
             setJobs(response.data);
         } catch (error) {
             console.error('Error fetching external job information:', error);
@@ -161,7 +163,7 @@ function JobPosting() {
             const job = companyJobs[jobId];
             console.log(job);
             return (
-                job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                (job.title && job.title.toLowerCase().includes(searchTerm.toLowerCase())) ||
                 (job.location && job.location.toLowerCase().includes(searchTerm.toLowerCase())) ||
                 (job.description && job.description.toLowerCase().includes(searchTerm.toLowerCase()))
             );
