@@ -1,12 +1,16 @@
 Backend Requirements:
     8 total Web-Services:
         #1 - Users
-        #2 - 
+        #2 - Companies
+        #3 - Company Jobs
+        #4 - All jobs
+        #5 - Apply
+        #6 - Search
 
     4 web services that use custom headers:
         #1 - Users (checks "sender-uid" header)
         #2 - Companies (checks "sender-uid" header)
-        #3 - 
+        #3 - Applying for jobs (checks "sender-uid" header)
         #4 - 
 
     2 web services that use GET, POST, PUT, DELETE:
@@ -63,6 +67,7 @@ Web Service #2 - Companies:
         GET: Get a specific company
         PUT: Update a specific company
 
+Web Service #3 - Company Jobs
     http://localhost:2000/companies/{uid}/jobs
         GET: Get all jobs from a specific company
         POST: Create a new job under a specific company
@@ -72,7 +77,7 @@ Web Service #2 - Companies:
         PUT: Update a specific job from a specific company
     
 
-Web Service #3 - Job Postings:
+Web Service #4 - Job Postings:
     http://localhost:2000/jobs/
         GET: Get all jobs from all companies
 
@@ -83,13 +88,16 @@ Web Service #3 - Job Postings:
         GET: Get external jobs 
 
 
-Web Service #4 - Applying
+Web Service #5 - Applying
     http://localhost:2000/apply/{uid}
         POST: Apply to a specific job
 
-Web Service #5 - Search
+
+Web Service #6 - Search
     http://localhost:2000/search/{users/companies/jobs}/{name}
         GET: Search for things by name
+
+
 
 Authetication Process:
     1. Call FirebaseAuthHandler.signInUser and provide necessary arguments
