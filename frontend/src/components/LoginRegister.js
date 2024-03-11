@@ -22,7 +22,6 @@ const LoginRegister = () => {
             if (uid) {
                 localStorage.setItem('uid', uid);
 
-
                 try {
                     // Check if the user is valid
                     await axios.get("http://localhost:2000/users/" + uid);
@@ -53,9 +52,6 @@ const LoginRegister = () => {
             const uid = await FirebaseAuthHandler.createUser(email, password);
             if (uid) {
                 localStorage.setItem('uid', uid);
-
-
-
                 window.location.href = '/profile'; // Redirect to the profile page
             } else {
                 console.error('Registration failed');
