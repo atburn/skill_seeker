@@ -145,7 +145,14 @@ function Profile() {
     onChange={handleInputChange}
   />
 </div>
-
+<div className="field">
+  <label>Title:</label>
+  <input
+    name="title"
+    value={formData.title}
+    onChange={handleInputChange}
+  />
+</div>
         <div className="field">
           <label>Summary:</label>
           <textarea
