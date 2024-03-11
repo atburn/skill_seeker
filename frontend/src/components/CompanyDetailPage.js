@@ -40,10 +40,10 @@ function CompanyDetailPage() {
             {jobs.length ? (
                 <ul>
                     {jobs.map(job => (
-                        <li key={job.jobid}>
+                        <li key={job.jobId}>
                             <h3>{job.title}</h3>
                             <p>{job.description}</p>
-                            <Link to={`/jobs/${job.jobid}`}>View</Link>
+                            <Link to={`/jobs/${job.jobIdd}`}>View</Link>
                             {/* You can also add an Apply button here */}
                         </li>
                     ))}
