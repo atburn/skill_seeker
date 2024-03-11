@@ -262,7 +262,12 @@ app.put("/users/:uid", async (req, res) => {
     }
 });
 
-
+/**
+ *  DELETE: Deletes a user
+ * 
+ *  Parameters:
+ *      uid: UID of the user to delete
+ */
 app.delete("/users/:uid", async (req, res) => {
     try {
         const updatedUser = await User.findOneAndDelete(
@@ -915,11 +920,10 @@ app.get("/jobs/:uid", async (req, res) => {
  */
 app.post("/apply/:uid", async (req, res) => {
     const jobUID = req.params.uid;
-    const userID = req.body.senderUID;
+    const userID = req.headers["sender-uid"];
 
 
     try {
-
         // Find the company that the job is from
         const companies = await Company.find();
         let o = null;
@@ -946,9 +950,6 @@ app.post("/apply/:uid", async (req, res) => {
             { $push: { [`jobs.${jobUID}.applicants`]: applicantInfoObject } },
             { new: true }
         );
-
-
-
 
         const appliedJobObject = {
             jobID: jobUID,
