@@ -28,6 +28,13 @@ Backend Requirements:
 
 
     2 web services with second-order composition
+        #1 - Companies
+        #2 - 
+
+    2 External Web Service Providers:
+        #1 - Firebase for Authentication
+        #2 - MongoDB
+        #3 - JSearch
 
 
 
@@ -40,11 +47,6 @@ RapidAPI:
     u: SkillSeeker1
     e: skillseeker.noreply@gmail.com
     p: SkillSeeker12.
-
-External Web Services:
-    #1 - Firebase Authentication
-    #2 - MongoDB
-    #3 - JSearch // NOTE: THIS HAS A 200/MONTH LIMIT
 
 
 Web Service #1 - Users:

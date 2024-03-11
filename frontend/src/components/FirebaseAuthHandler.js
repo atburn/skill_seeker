@@ -67,6 +67,7 @@ export default class FirebaseAuthHandler {
                 return data.user.uid;
             })
             .catch((error) => {
+                console.log(error)
                 return null;
             });
 

@@ -42,6 +42,12 @@ const APIDocs = swaggerJSdoc(APIDocOptions);
 // Serve Swagger documentation
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(APIDocs));
 
+
+
+
+
+
+
 app.listen(PORT, () => {
     console.log("Listening at http://localhost:" + PORT);
 });
@@ -273,9 +279,7 @@ app.put("/users/:uid", async (req, res) => {
         res.status(201).json(updatedUser);
     } catch (error) {
         console.error(error);
-        res
-            .status(401)
-            .json({ error: "Could not modify contents for UID: " + profileToModify });
+        res.status(401).json({ error: "Could not modify contents for UID: " + profileToModify });
     }
 });
 

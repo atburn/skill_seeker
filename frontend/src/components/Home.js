@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'; 
 import backgroundImage from './background.jpg';
-import logoImage from './logo.png';
+import logoImage from './skillseeker-full-icon-nobackground.png';
 
 function Home() {
   return (
