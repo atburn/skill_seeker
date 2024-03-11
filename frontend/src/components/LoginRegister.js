@@ -52,6 +52,18 @@ const LoginRegister = () => {
             const uid = await FirebaseAuthHandler.createUser(email, password);
             if (uid) {
                 localStorage.setItem('uid', uid);
+
+                await axios.post("http://localhost:2000/users", {
+                    "firstName": firstName,
+                    "lastName": lastName,
+                    "email": email
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "sender-uid": uid
+                    }
+                })
+
                 window.location.href = '/profile'; // Redirect to the profile page
             } else {
                 console.error('Registration failed');

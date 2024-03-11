@@ -16,7 +16,15 @@ function CompanyDetailPage() {
                 const companyResponse = await axios.get(`http://localhost:2000/companies/${companyId}`);
                 setCompany(companyResponse.data);
                 const jobsResponse = await axios.get(`http://localhost:2000/companies/${companyId}/jobs`);
-                setJobs(jobsResponse.data);
+
+                const a = [];
+                for (const jobUID in jobsResponse.data) {
+                    a.push({
+                        ...jobsResponse.data[jobUID]
+                    })
+                }
+
+                setJobs(a);
             } catch (error) {
                 console.error('Error fetching company and jobs:', error);
             }
@@ -37,16 +45,19 @@ function CompanyDetailPage() {
             <p><strong>Email:</strong> {company.email}</p>
             <p><strong>Description:</strong> {company.summary}</p>
             <h2>Available Jobs</h2>
-            {jobs.length ? (
+            {jobs ? (
                 <ul>
-                    {jobs.map(job => (
-                        <li key={job.jobId}>
-                            <h3>{job.title}</h3>
-                            <p>{job.description}</p>
-                            <Link to={`/jobs/${job.jobIdd}`}>View</Link>
-                            {/* You can also add an Apply button here */}
-                        </li>
-                    ))}
+                    {jobs.map(job => {
+                        return (
+                            <li key={job.jobId}>
+                                <h3>{job.title}</h3>
+                                <p>{job.description}</p>
+                                <Link to={`/jobs/${job.jobIdd}`}>View</Link>
+                            </li>
+                        )
+                    })
+                    }
+
                 </ul>
             ) : (
                 <p>No current job openings.</p>
