@@ -1,12 +1,15 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-
 const Logout = () => {
-  const navigate = useNavigate();
 
   const handleLogout = () => {
+   
     localStorage.removeItem('uid');
-    navigate('/');
+
+   
+    localStorage.setItem('isLoggedIn', 'false');
+
+    
+    window.location.href = '/';
   };
 
   const buttonStyle = {

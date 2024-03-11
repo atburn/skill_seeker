@@ -4,9 +4,19 @@ import { Link } from 'react-router-dom';
 
 function Header() {
 
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
 
+	useEffect(() => {
+        const handleStorageChange = () => {
+            setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
+        };
 
+        window.addEventListener('storage', handleStorageChange);
+
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+        };
+    }, []);
 	return (
 		<div className="global-header">
 			<div className="brand">
@@ -23,11 +33,7 @@ function Header() {
 					<Link to="/aboutus">About Us</Link>
 
 					{
-						!isLoggedIn && <Link to="/loginregister">Login/Register</Link>
-					}
-
-					{
-						isLoggedIn && <Link to="/logout">Log Out</Link>
+						isLoggedIn ? <Link to="/logout">Log Out</Link> : <Link to="/loginregister">Login/Register</Link>
 					}
 
 

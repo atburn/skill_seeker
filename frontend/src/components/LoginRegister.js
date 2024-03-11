@@ -21,7 +21,7 @@ const LoginRegister = () => {
             const uid = await FirebaseAuthHandler.signInUser(email, password);
             if (uid) {
                 localStorage.setItem('uid', uid);
-
+                localStorage.setItem('isLoggedIn', 'true');
                 try {
                     // Check if the user is valid
                     await axios.get("http://localhost:2000/users/" + uid);
