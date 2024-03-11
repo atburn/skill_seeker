@@ -7,6 +7,7 @@ const ViewProfile = () => {
   const [user, setUser] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchedUser, setSearchedUser] = useState(null);
+  const [noUserFound, setNoUserFound] = useState(false);
   
   const navigate = useNavigate();
 
@@ -32,14 +33,15 @@ const ViewProfile = () => {
       const response = await axios.get(`http://localhost:2000/search/users/${searchQuery}`);
       if (response.data.length > 0) {
         setSearchedUser(response.data[0]);
+        setNoUserFound(false);
       } else {
         setSearchedUser(null);
+        setNoUserFound(true);
       }
     } catch (error) {
       console.error('Error searching for user:', error);
     }
   };
-
   const renderUserProfile = (userData) => {
     return (
       <>
@@ -112,12 +114,13 @@ const ViewProfile = () => {
       <div className="search-bar">
         <input
           type="text"
-          placeholder="Search for a user by first name"
+          placeholder="Search for a user"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
         <button onClick={handleSearch}>Search</button>
       </div>
+      {noUserFound && <p>No user found.</p>}
       {searchedUser ? (
         renderUserProfile(searchedUser)
       ) : (
