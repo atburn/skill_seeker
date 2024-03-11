@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: linear-gradient(to right, #fdfdfd, #2977c9);
+    background: linear-gradient(to right, #fdfdfd, #f7f7f7);
     padding: 20px;
   }
   
