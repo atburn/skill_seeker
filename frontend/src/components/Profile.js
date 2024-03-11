@@ -61,12 +61,14 @@ function Profile() {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          "sender-uid": uid
         },
         body: JSON.stringify(profileData),
       });
   
       if (response.ok) {
         console.log('Profile saved successfully!');
+        window.location.href = '/view-profile'; // Redirect to the profile page
       } else {
         console.error('Failed to save profile:', response.statusText);
       }
@@ -162,7 +164,7 @@ function Profile() {
           <label>School:</label>
           <input
             name="school"
-            value={education.school}
+            value={education?.school}
             onChange={handleEducationChange}
           />
         </div>
@@ -171,7 +173,7 @@ function Profile() {
           <label>Degree:</label>
           <input
             name="degree"
-            value={education.degree}
+            value={education?.degree}
             onChange={handleEducationChange}
           />
         </div>
@@ -180,7 +182,7 @@ function Profile() {
           <label>Field of Study:</label>
           <input
             name="fieldOfStudy"
-            value={education.fieldOfStudy}
+            value={education?.fieldOfStudy}
             onChange={handleEducationChange}
           />
         </div>
@@ -190,7 +192,7 @@ function Profile() {
   <input
     type="text"
     name="startDate"
-    value={education.startDate}
+    value={education?.startDate}
     onChange={handleEducationChange}
     placeholder="MM/yyyy"
   />
@@ -201,7 +203,7 @@ function Profile() {
   <input
     type="text"
     name="endDate"
-    value={education.endDate}
+    value={education?.endDate}
     onChange={handleEducationChange}
     placeholder="MM/yyyy"
   />
@@ -212,7 +214,7 @@ function Profile() {
           <textarea
             rows="4"
             name="summary"
-            value={education.summary}
+            value={education?.summary}
             onChange={handleEducationChange}
           />
         </div>

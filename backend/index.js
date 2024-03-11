@@ -178,6 +178,7 @@ app.post("/users", async (req, res) => {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
 
+    console.log("here")
     try {
         const user = new User({
             uid: senderUID,
@@ -276,6 +277,7 @@ app.put("/users/:uid", async (req, res) => {
             user,
             { new: true }
         );
+        console.log(updatedUser);
         res.status(201).json(updatedUser);
     } catch (error) {
         console.error(error);

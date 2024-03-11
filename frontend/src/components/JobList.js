@@ -12,7 +12,6 @@ const JobList = () => {
     useEffect(() => {
         const fetchJobs = async () => {
             try {
-                
                 const response = await axios.get(`http://localhost:2000/companies/${companyId}`);
                 setJobs(response.data);
             } catch (error) {
@@ -20,7 +19,7 @@ const JobList = () => {
             }
         };
         if (companyId) {
-        fetchJobs();
+            fetchJobs();
         }
     }, [companyId]); 
 
