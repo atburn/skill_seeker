@@ -52,6 +52,9 @@ function JobPosting() {
         resume: null,
     });
 
+    const [externalSearchTerm, setExternalSearchTerm] = useState('');
+    const [externalJobs, setExternalJobs] = useState([]);
+
     useEffect(() => {
         fetchJobs();
         fetchCompanies();
@@ -78,6 +81,20 @@ function JobPosting() {
             console.error('Error fetching companies:', error);
         }
     };
+
+    const fetchExternalJobs = async () => {
+        try {
+            const response = await axios.get('http://localhost:2000/jobs/external', {
+                params: {
+                    query: searchTerm
+                }
+            });
+            setJobs(response.data);
+        } catch (error) {
+            console.error('Error fetching external job information:', error);
+        }
+    };
+
 
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
@@ -106,6 +123,17 @@ function JobPosting() {
         setApplicantData({ ...applicantData, resume: e.target.files[0] });
     };
 
+    const handleExternalSearch = async () => {
+        try {
+            const response = await axios.get(`/jobs/external?query=${externalSearchTerm}`);
+            const firstJob = response.data[Object.keys(response.data)[0]]; // Get the first job
+            setSelectedJob(firstJob); // Set the first job as the selected job
+            setIsApplying(true); // Show the job details as a pop-up window
+        } catch (error) {
+            console.error('Error fetching external job information:', error);
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
@@ -129,11 +157,15 @@ function JobPosting() {
     const filteredJobs = Object.keys(jobs).reduce((filtered, companyId) => {
         const companyJobs = jobs[companyId];
 
-        const filteredCompanyJobs = Object.keys(companyJobs).filter(jobId =>
-            companyJobs[jobId].title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            companyJobs[jobId].location.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            companyJobs[jobId].description.toLowerCase().includes(searchTerm.toLowerCase())
-        ).reduce((obj, jobId) => {
+        const filteredCompanyJobs = Object.keys(companyJobs).filter(jobId => {
+            const job = companyJobs[jobId];
+            console.log(job);
+            return (
+                job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                (job.location && job.location.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                (job.description && job.description.toLowerCase().includes(searchTerm.toLowerCase()))
+            );
+        }).reduce((obj, jobId) => {
             obj[jobId] = companyJobs[jobId];
             return obj;
         }, {});
@@ -147,35 +179,41 @@ function JobPosting() {
 
     return (
         <div className="job-posting">
-            <input 
-                type="text"
-                placeholder="Search by title, location, description..."
-                value={searchTerm}
-                onChange={handleSearch}  
-            />
+            {/* Original job search */}
+            <div>
+                <h2>Search for Jobs</h2>
+                <input
+                    type="text"
+                    placeholder="Search by title, location, description..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                {/* Render original job search results */}
+            </div>
 
-            <div className="job-posting-results">
-                {Object.keys(filteredJobs).map(companyId => (
-                    <div key={companyId} className="company-jobs">
-                        <h2>Company: {companies[companyId] || 'Unknown'}</h2>
-                        {Object.keys(filteredJobs[companyId]).map(jobId => (
-                            <div key={jobId} className="job-posting">
-                                <h3>{filteredJobs[companyId][jobId].title}</h3>
-                                <p>Location: {filteredJobs[companyId][jobId].location}</p>
-                                <p>Description: {filteredJobs[companyId][jobId].description}</p>
-                                <div className="job-actions">
-                                    <Link to={`/jobs/${jobId}`} className="view-button">View</Link>
-                                    <Link to={`/apply/${jobId}`} className="apply-button">Apply</Link>
-                                </div>
-
-                            </div>
-                        ))}
+            {/* External job search */}
+            <div>
+                <h2>Search for External Jobs</h2>
+                <input
+                    type="text"
+                    placeholder="Search by title, location, description..."
+                    value={externalSearchTerm}
+                    onChange={(e) => setExternalSearchTerm(e.target.value)}
+                />
+                <button onClick={fetchExternalJobs}>Search</button>
+                {/* Render external job search results */}
+                {externalJobs.map(job => (
+                    <div key={job.id}>
+                        <h3>{job.title}</h3>
+                        <p>Location: {job.location}</p>
+                        {/* Add more job details if needed */}
+                        <button onClick={() => handleViewJob(job)}>View Details</button>
+                        <button onClick={() => handleApply(job)}>Apply</button>
                     </div>
                 ))}
             </div>
 
-            {selectedJob && <JobDetails job={selectedJob} onClose={handleCloseJob} />}
-            
+            {/* Render selected job details and application form */}
         </div>
     );
 }
