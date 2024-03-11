@@ -42,6 +42,12 @@ const APIDocs = swaggerJSdoc(APIDocOptions);
 // Serve Swagger documentation
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(APIDocs));
 
+
+
+
+
+
+
 app.listen(PORT, () => {
     console.log("Listening at http://localhost:" + PORT);
 });
@@ -110,21 +116,38 @@ app.get("/users", async (req, res) => {
  *      201: Found user
  *          Returns the user found.
  */
-app.get("/users/:uid", async (req, res) => {
-    try {
-        const uid = req.params.uid;
-        const user = await User.findOne({ uid: uid });
-
-        if (!user) {
+    app.get("/users/:uid", async (req, res) => {
+        try {
+          const uid = req.params.uid;
+          const user = await User.findOne({ uid: uid });
+      
+          if (!user) {
             res.status(404).json({ error: "No matching user found." });
-        } else {
-            res.status(200).json(user);
+          } else {
+            // Fetch job details for each applied job
+            const appliedJobsWithDetails = await Promise.all(
+              user.appliedJobs.map(async (job) => {
+                const company = await Company.findOne({ uid: job.companyUID });
+                const jobDetails = company.jobs[job.jobID];
+                return {
+                  ...job,
+                  title: jobDetails.title,
+                  company: company.name,
+                };
+              })
+            );
+      
+            // Include the applied jobs with details in the response
+            res.status(200).json({
+              ...user.toObject(),
+              appliedJobs: appliedJobsWithDetails,
+            });
+          }
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({ error: "Error retrieving user." });
         }
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Error retrieving user." });
-    }
-});
+      });
 
 
 /**
@@ -132,7 +155,6 @@ app.get("/users/:uid", async (req, res) => {
  *
  *  Sample Request Body:
     {
-        "senderUID": "nV1eURpJGpS4iSdpsyrrPHp6Zl73",
         "firstName": "Cassie",
         "lastName": "Watts",
         "email": "testuser1@email.com"
@@ -151,7 +173,7 @@ app.get("/users/:uid", async (req, res) => {
  *
  */
 app.post("/users", async (req, res) => {
-    const senderUID = req.body.senderUID;
+    const senderUID = req.headers["sender-uid"];
     const email = req.body.email;
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
@@ -178,7 +200,6 @@ app.post("/users", async (req, res) => {
  *
  *  Example request body:
     {
-        "senderUID": "CfuuRrQjnGMk8EQKWYKXswj9HDu1",
         "firstName": "Adam",
         "lastName": "Burke",
         "email": "testuser3@email.com",
@@ -219,7 +240,8 @@ app.put("/users/:uid", async (req, res) => {
     const body = req.body;
 
     const profileToModify = parameters.uid;
-    const senderUID = body.senderUID;
+    const senderUID = req.headers["sender-uid"];
+
 
     if (profileToModify !== senderUID) {
         res.status(500).json({
@@ -257,11 +279,29 @@ app.put("/users/:uid", async (req, res) => {
         res.status(201).json(updatedUser);
     } catch (error) {
         console.error(error);
-        res
-            .status(401)
-            .json({ error: "Could not modify contents for UID: " + profileToModify });
+        res.status(401).json({ error: "Could not modify contents for UID: " + profileToModify });
     }
 });
+
+/**
+ *  DELETE: Deletes a user
+ * 
+ *  Parameters:
+ *      uid: UID of the user to delete
+ */
+app.delete("/users/:uid", async (req, res) => {
+    try {
+        const updatedUser = await User.findOneAndDelete(
+            { uid: req.params.uid }
+        );
+        res.status(201).json({ Success: "Deleted user with UID: " + req.params.uid });
+    } catch (error) {
+        console.error(error);
+        res
+            .status(401)
+            .json({ error: "Could not modify contents for UID: " + req.params.uid });
+    }
+})
 
 import Company from "./objects/Company.js";
 import axios from "axios";
@@ -396,6 +436,25 @@ app.get("/companies/:uid", async (req, res) => {
     }
 });
 
+app.delete("/companies/:uid", async (req, res) => {
+    try {
+        const uid = req.params.uid;
+        const company = await Company.findOneAndDelete({ uid: uid });
+        if (company.length === 0) {
+            res
+                .status(500)
+                .json({ Error: "No matching companies with the UID of " + uid });
+        } else {
+            res.status(200).json({ Success: "Successfully deleted company with UID: " + uid });
+        }
+    } catch (error) {
+        console.error(error);
+        res
+            .status(500)
+            .json({ Error: "No matching companies with the UID of " + uid });
+    }
+});
+
 /**
  *  POST: Create a new company.
  * 
@@ -450,9 +509,11 @@ app.post("/companies", async (req, res) => {
  *  Parameters:
  *      uid: The company to modify
  * 
+ *  Headers:
+ *      sender-uid: The UID of the company to modify
+ * 
  *  Sample Request Body: 
     {
-        "senderUID": "XESuFETTURTK9J1KEuB0RXo2x1X2",
         "email": "testcompany2@email.com",
         "name": "Sample Grocery Store",
         "summary": "Sample summary for the Sample Grocery Store",
@@ -490,7 +551,7 @@ app.put("/companies/:uid", async (req, res) => {
     const body = req.body;
 
     const companyToModify = parameters.uid;
-    const senderUID = body.senderUID;
+    const senderUID = req.headers["sender-uid"];
 
     if (companyToModify !== senderUID) {
         res.status(500).json({
@@ -603,7 +664,6 @@ app.get("/companies/:uid/jobs/:jobid", async (req, res) => {
  *
  * Example Request Body:
     {
-        "senderUID": "XESuFETTURTK9J1KEuB0RXo2x1X2",
         "title": "Stocker",
         "location": "Kent, WA",
         "description": "Sample description for Stocker",
@@ -626,7 +686,7 @@ app.post("/companies/:uid/jobs", async (req, res) => {
     const uid = req.params.uid;
     const body = req.body;
 
-    if (uid !== body.senderUID) {
+    if (uid !== req.headers["sender-uid"]) {
         res.status(500).json({
             error: "UID of sender doesn't match UID of the company.",
             senderUID: body.senderUID,
@@ -666,7 +726,6 @@ app.post("/companies/:uid/jobs", async (req, res) => {
  *
  *  Sample Request Body:
     {
-        "senderUID": "XESuFETTURTK9J1KEuB0RXo2x1X2",
         "title": "Stocker",
         "location": "Kent, WA",
         "description": "Sample description for Stocker",
@@ -679,7 +738,7 @@ app.put("/companies/:uid/jobs/:jobid", async (req, res) => {
     const jobid = req.params.jobid;
 
     const body = req.body;
-    if (uid !== body.senderUID) {
+    if (uid !== req.headers["sender-uid"]) {
         res.status(500).json({
             error: "UID of sender doesn't match UID of the company.",
             senderUID: body.senderUID,
@@ -882,11 +941,10 @@ app.get("/jobs/:uid", async (req, res) => {
  */
 app.post("/apply/:uid", async (req, res) => {
     const jobUID = req.params.uid;
-    const userID = req.body.senderUID;
+    const userID = req.headers["sender-uid"];
 
 
     try {
-
         // Find the company that the job is from
         const companies = await Company.find();
         let o = null;
@@ -913,9 +971,6 @@ app.post("/apply/:uid", async (req, res) => {
             { $push: { [`jobs.${jobUID}.applicants`]: applicantInfoObject } },
             { new: true }
         );
-
-
-
 
         const appliedJobObject = {
             jobID: jobUID,
@@ -947,4 +1002,58 @@ app.post("/apply/:uid", async (req, res) => {
 });
 
 
+
+
+
+/**
+ *  GET: Search for things by first name
+ * 
+ *  Parameters:
+ *      type: Either companies, users, or jobs
+ *      name: Name to search for
+ * 
+ *  Note:
+ *      Currently, this only matches from the first name. It's not very good.
+ * 
+ */
+app.get("/search/:type/:name", async (req, res) => {
+    const type = req.params.type;
+    const name = req.params.name;
+    try {
+        const regex = new RegExp('^' + name, 'i');
+        if (type === "users") {
+            const users = await User.find({ firstName: regex });
+            res.status(201).json(users);
+        } else if (type === "jobs") {
+            const company = await Company.find();
+            let o = [];
+            company.forEach((company) => {
+                for (const uid in company.jobs) {
+                    if (company.jobs[uid].title.match(regex)) {
+                        o.push({
+                            [uid]: { ...company.jobs[uid] }
+                        })
+                    }
+                }
+            });
+
+            res.status(201).json(o);
+
+        } else if (type === "companies") {
+            const companies = await Company.find({ name: regex });
+            res.status(201).json(companies);
+        } else {
+            res.status(401).json({ error: "Invalid search paramters of " + type + ". Must be either jobs, companies, or users." })
+        }
+    } catch (error) {
+        res.status(401).json({
+            error: "Error executing search.",
+            name: req.params.name,
+            type: req.params.type
+
+        })
+
+    }
+
+});
 

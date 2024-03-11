@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import FirebaseAuthHandler from './FirebaseAuthHandler'; 
+import FirebaseAuthHandler from './FirebaseAuthHandler';
 import './LoginRegister.css';
+import axios from "axios";
 
 const LoginRegister = () => {
     const [firstName, setFirstName] = useState('');
@@ -17,17 +18,28 @@ const LoginRegister = () => {
 
     const handleLogin = async () => {
         try {
-          const uid = await FirebaseAuthHandler.signInUser(email, password);
-          if (uid) {
-            localStorage.setItem('uid', uid);
-            window.location.href = '/view-profile'; 
-          } else {
-            console.error('Login failed');
-          }
+            const uid = await FirebaseAuthHandler.signInUser(email, password);
+            if (uid) {
+                localStorage.setItem('uid', uid);
+
+                try {
+                    // Check if the user is valid
+                    await axios.get("http://localhost:2000/users/" + uid);
+                    window.location.href = '/view-profile';
+                } catch (error) {
+                    // Check if company is valid
+                    await axios.get("http://localhost:2000/companies/" + uid);
+                    window.location.href = '/companies/' + uid;
+
+                }
+
+            } else {
+                console.error('Login failed');
+            }
         } catch (error) {
-          console.error('Login error:', error.message);
+            console.error('Login error:', error.message);
         }
-      };
+    };
 
     const handleRegister = async () => {
         if (password !== confirmPassword) {
@@ -39,15 +51,15 @@ const LoginRegister = () => {
         try {
             const uid = await FirebaseAuthHandler.createUser(email, password);
             if (uid) {
-              localStorage.setItem('uid', uid);
-              window.location.href = '/profile'; // Redirect to the profile page
+                localStorage.setItem('uid', uid);
+                window.location.href = '/profile'; // Redirect to the profile page
             } else {
-              console.error('Registration failed');
+                console.error('Registration failed');
             }
-          } catch (error) {
+        } catch (error) {
             console.error('Registration error:', error.message);
-          }
-        };
+        }
+    };
 
     const handleForgotPassword = async () => {
         if (email) {
@@ -59,46 +71,40 @@ const LoginRegister = () => {
     };
 
     return (
-      <div className="login-register-container">
-          <div className="login-register-card">
-              <h2>{isLogin ? 'Login to Skill Seeker' : 'Join Skill Seeker'}</h2>
-              {!isLogin && (
-                  <div className="name-fields">
-                      <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder="First Name" />
-                      <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} placeholder="Last Name" />
-                  </div>
-              )}
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password (6+ characters)" />
-              {!isLogin && (
-                  <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm Password" />
-              )}
-              
-                
-              <div className="agreement-text">
-              By clicking "{isLogin ? 'Login' : 'Register'}", you agree to the Skill Seeker <a href="#" className="legal-link">User Agreement</a>, <a href="#" className="legal-link">Privacy Policy</a>, and <a href="#" className="legal-link">Cookie Policy</a>.
-              </div>
+        <div className="login-register-container">
+            <div className="login-register-card">
+                <h2>{isLogin ? 'Login to Skill Seeker' : 'Join Skill Seeker'}</h2>
+                {!isLogin && (
+                    <div className="name-fields">
+                        <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder="First Name" />
+                        <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} placeholder="Last Name" />
+                    </div>
+                )}
+                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password (6+ characters)" />
+                {!isLogin && (
+                    <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm Password" />
+                )}
 
-              <button className="main-action-button" onClick={isLogin ? handleLogin : handleRegister}>{isLogin ? 'Login' : 'Register'}</button>
-              <div className="or-container">
-                <div className="line"></div>
-                <div className="or-text">or</div>
-                <div className="line"></div>
-              
-                  <button className="google-signin-button">Continue with Google</button>
-              </div>
-              {isLogin ? (
-                  <div className="redirect-section">
-                      <p>New to Skill Seeker? <span onClick={() => setIsLogin(false)}>Register here!</span></p>
-                      <p><span onClick={handleForgotPassword}>Forgot Password?</span></p>
-                  </div>
-              ) : (
-                  <p className="redirect-section">Already have an account? <span onClick={() => setIsLogin(true)}>Log in!</span></p>
-              )}
-          </div>
-      </div>
-  );  
-  
-}  
+
+                <div className="agreement-text">
+                    By clicking "{isLogin ? 'Login' : 'Register'}", you agree to the Skill Seeker <a href="#" className="legal-link">User Agreement</a>, <a href="#" className="legal-link">Privacy Policy</a>, and <a href="#" className="legal-link">Cookie Policy</a>.
+                </div>
+
+                <button className="main-action-button" onClick={isLogin ? handleLogin : handleRegister}>{isLogin ? 'Login' : 'Register'}</button>
+
+                {isLogin ? (
+                    <div className="redirect-section">
+                        <p>New to Skill Seeker? <span onClick={() => setIsLogin(false)}>Register here!</span></p>
+                        <p><span onClick={handleForgotPassword}>Forgot Password?</span></p>
+                    </div>
+                ) : (
+                    <p className="redirect-section">Already have an account? <span onClick={() => setIsLogin(true)}>Log in!</span></p>
+                )}
+            </div>
+        </div>
+    );
+
+}
 
 export default LoginRegister;

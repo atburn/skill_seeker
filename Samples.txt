@@ -102,7 +102,7 @@ Sample Companies:
     Sample Engineering Company
         uid:        EfGwH1uRqsUlkQAo4L9WjDv5xCP2
         email:      testcompany1@email.com
-        password:   testcompany1
+        password:       
         jobs:
             uid:            631e646f-51dd-4b14-bc94-aa500284826a
                 title:          Electrical Engineer

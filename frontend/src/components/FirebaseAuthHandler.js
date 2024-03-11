@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut } from "firebase/auth";
 
 const firebaseConfig = {
     apiKey: "AIzaSyArlJtYhZe_hquSJNo8NUGpoPeGGWxOYyY",
@@ -27,11 +27,19 @@ const firebaseConfig = {
  * // DATA WILL EITHER BE NULL OR A UID. IF ITS NULL, UNSUCCESSFUL LOGIN. IF ITS A UID, SAVE IT SOMEWHERE.
  * 
  */
+
+
+
 export default class FirebaseAuthHandler {
+
+    static signedIn = false;
+
 
     constructor() {
 
     }
+
+
 
     static start() {
         const firebaseApp = initializeApp(firebaseConfig);
@@ -48,6 +56,7 @@ export default class FirebaseAuthHandler {
         const auth = getAuth();
         return createUserWithEmailAndPassword(auth, email, password)
             .then((data) => {
+                this.signedIn = true;
                 return data.user.uid;
             })
             .catch((error) => {
@@ -64,9 +73,11 @@ export default class FirebaseAuthHandler {
         const auth = getAuth();
         return signInWithEmailAndPassword(auth, email, password)
             .then((data) => {
+                this.signedIn = true;
                 return data.user.uid;
             })
             .catch((error) => {
+                console.log(error)
                 return null;
             });
 
@@ -82,5 +93,16 @@ export default class FirebaseAuthHandler {
                 console.error('Error sending password reset email:', error);
             });
     }
+
+    static async logOut() {
+        return signOut(getAuth()).then(() => {
+            console.log("Sign out successful");
+            this.signedIn = false;
+        }).catch(() => {
+            console.log("Error signing out user");
+        });
+    }
+
+
 }
 
