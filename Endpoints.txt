@@ -87,7 +87,7 @@ Web Service #4 - Applying
     http://localhost:2000/apply/{uid}
         POST: Apply to a specific job
 
-Web Service #5 - Searcj
+Web Service #5 - Search
     http://localhost:2000/search/{users/companies/jobs}/{name}
         GET: Search for things by name
 
