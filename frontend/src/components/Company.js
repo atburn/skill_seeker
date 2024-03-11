@@ -6,26 +6,42 @@ import JobList from './JobList';
 
 const CompanyList = ({ onSelectCompany }) => {
     const [companies, setCompanies] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         const fetchCompanies = async () => {
             const response = await axios('http://localhost:2000/companies/');
             setCompanies(response.data);
         };
-
         fetchCompanies();
     }, []);
 
+    const filteredCompanies = companies.filter(company =>
+        company.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
-        <ul>
-            {companies.map((company) => (
-                <li key={company.uid}>
-                    <Link to={`/companies/${company.uid}`} onClick={() => onSelectCompany(company)}>
-                        {company.name}
-                    </Link>
-                </li>
-            ))}
-        </ul>
+        <div>
+            <div className="search-container">
+                <input 
+                    type="text"
+                    placeholder="Search for companies..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="search-bar"   
+                />
+                <button className="search-button">Search</button>
+            </div>
+            <ul>
+                {filteredCompanies.map((company) => (
+                    <li key={company.uid}>
+                        <Link to={`/companies/${company.uid}`} onClick={() => onSelectCompany(company.uid)}>
+                            {company.name}
+                        </Link>
+                    </li>
+                ))}
+            </ul>
+        </div>
     );
 };
 
@@ -40,7 +56,6 @@ const Company = () => {
                 setCompanyDetails(response.data);
             }
         };
-
         fetchCompanyDetails();
     }, [selectedCompanyId]);
 

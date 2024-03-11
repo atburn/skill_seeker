@@ -1,64 +1,71 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+    background-color: #f4f4f4; 
+    font-family: Arial, sans-serif; 
 }
 
-h1, h2, h3 {
-    color: #333;
+.company-page-container {
+    max-width: 800px;
+    margin: 0 auto; 
+    background-color: #fff; 
+    padding: 20px;
+    border-radius: 10px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
 }
 
-ul {
-    list-style-type: none;
-    padding: 0;
+.search-container {
+    position: relative; 
+    max-width: 600px; 
+    margin: auto; 
 }
 
-li {
-    padding: 8px;
-    margin: 5px 0;
-    background-color: white;
-    border-radius: 4px;
+.search-bar {
+    width: 100%; 
+    padding: 10px;
+    padding-right: 60px; 
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    font-size: 16px;
+}
+
+.search-button {
+    position: absolute; 
+    top: 0;
+    right: 0;
+    padding: 10px 20px; 
+    margin: 2px; 
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 0 5px 5px 0; 
     cursor: pointer;
-    border: 1px solid #ddd;
+    font-size: 16px;
 }
 
-li:hover {
-    background-color: #f0f0f0;
+.search-button:focus,
+.search-button:hover {
+    background-color: #0056b3;
 }
 
 .company-list {
-    width: 30%;
-    float: left;
+    list-style-type: none; 
+    padding: 0; 
+}
+
+.company-item {
+    background-color: #ffffff; 
+    margin: 10px 0; 
+    padding: 10px; 
+    border-radius: 5px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.company-link {
+    text-decoration: none; 
+    color: #007bff; 
+    font-weight: bold; 
+}
+
+.company-container {
     padding: 20px;
-}
-
-.company-details {
-    width: 65%;
-    float: right;
-    padding: 20px;
-    background-color: white;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.company-details h2 {
-    margin-top: 0;
-}
-
-.job-list {
-    margin-top: 20px;
-}
-
-.clearfix::after {
-    content: "";
-    clear: both;
-    display: table;
-}
-
-@media screen and (max-width: 600px) {
-    .company-list, .company-details {
-        width: 100%;
-        float: none;
-    }
 }
