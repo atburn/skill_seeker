@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import './JobPosting.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 function JobDetails({ job, onClose }) {
     return (
         <div className="job-details">
@@ -39,6 +41,7 @@ function JobApplicationForm({ job, onSubmit, onInputChange, handleInputChange, o
 }
 
 function JobPosting() {
+    const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     const [jobs, setJobs] = useState({});
     const [companies, setCompanies] = useState({});
@@ -51,7 +54,7 @@ function JobPosting() {
         responsibilities: '',
         resume: null,
     });
-
+   
     const [externalSearchTerm, setExternalSearchTerm] = useState('');
     const [externalJobs, setExternalJobs] = useState([]);
 
@@ -104,16 +107,18 @@ function JobPosting() {
 
     const handleViewJob = (job) => {
         setSelectedJob(job);
-        setIsApplying(false);
-    }
+        navigate(`/jobs/${job.id}`, { state: { job } });
+    };
 
     const handleCloseJob = () => {
         setSelectedJob(null);
     }
 
-    const handleApply = (job) => {
-        setSelectedJob(job);
+    const handleApply = (jobId) => {
+        setSelectedJob(jobId);
         setIsApplying(true);
+        navigate(`/apply/${jobId}`);
+        
     };
 
     const handleInputChange = (e) => {
@@ -142,7 +147,7 @@ function JobPosting() {
         formData.append('name', applicantData.name);
         formData.append('email', applicantData.email);
         formData.append('resume', applicantData.resume);
-        formData.append('position', selectedJob.title); // Assuming job title is used as position
+        formData.append('position', selectedJob.title); 
 
         try {
             const response = await axios.post('http://localhost:2000/apply', formData, {
@@ -208,14 +213,43 @@ function JobPosting() {
                     <div key={job.id}>
                         <h3>{job.title}</h3>
                         <p>Location: {job.location}</p>
-                        {/* Add more job details if needed */}
+                        
                         <button onClick={() => handleViewJob(job)}>View Details</button>
                         <button onClick={() => handleApply(job)}>Apply</button>
                     </div>
                 ))}
             </div>
 
-            {/* Render selected job details and application form */}
+
+            <h2>Job Postings</h2>
+      {Object.entries(filteredJobs).map(([companyId, companyJobs]) => (
+        <div key={companyId}>
+          <h3>{companies[companyId]}</h3>
+          {Object.entries(companyJobs).map(([jobId, job]) => (
+            <div key={jobId}>
+              <h4>{job.title}</h4>
+              <p>Location: {job.location}</p>
+              <p>Description: {job.description}</p>
+              <button onClick={() => handleViewJob(job)}>View Details</button>
+              <button onClick={() => handleApply(job.id)}>Apply</button>
+            </div>
+          ))}
+        </div>
+      ))}
+
+      {selectedJob && (
+        <JobDetails job={selectedJob} onClose={handleCloseJob} />
+      )}
+
+      {isApplying && (
+        <JobApplicationForm
+          job={selectedJob}
+          onSubmit={handleSubmit}
+          onInputChange={handleInputChange}
+          handleInputChange={handleInputChange}
+          onFileChange={handleFileChange}
+        />
+      )}
         </div>
     );
 }

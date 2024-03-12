@@ -1,23 +1,8 @@
-import { useParams, Link } from 'react-router-dom';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useLocation, Link } from 'react-router-dom';
 import './JobDetailsPage.css';
 function JobDetailsPage() {
-    const { jobId } = useParams();
-    const [job, setJob] = useState(null);
-
-    useEffect(() => {
-        fetchJob();
-    }, [jobId]);
-
-    const fetchJob = async () => {
-        try {
-            const response = await axios.get(`http://localhost:2000/jobs/${jobId}`);
-            setJob(response.data);
-        } catch (error) {
-            console.error('Error fetching job details:', error);
-        }
-    };
+    const { state } = useLocation();
+    const { job } = state || {};
 
     if (!job) {
         return <div>Loading...</div>;
