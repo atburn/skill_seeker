@@ -1,71 +1,63 @@
-body {
-    background-color: #f4f4f4; 
-    font-family: Arial, sans-serif; 
-}
-
-.company-page-container {
+.company-page {
     max-width: 800px;
-    margin: 0 auto; 
-    background-color: #fff; 
+    margin: 0 auto;
     padding: 20px;
-    border-radius: 10px; 
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
-}
-
-.search-container {
-    position: relative; 
-    max-width: 600px; 
-    margin: auto; 
-}
-
-.search-bar {
-    width: 100%; 
-    padding: 10px;
-    padding-right: 60px; 
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    outline: none;
-    font-size: 16px;
-}
-
-.search-button {
-    position: absolute; 
-    top: 0;
-    right: 0;
-    padding: 10px 20px; 
-    margin: 2px; 
+  }
+  
+  .company-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .company-header h1 {
+    margin: 0;
+  }
+  
+  .search-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-bar {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+  }
+  
+  .search-button {
+    padding: 8px 16px;
     background-color: #007bff;
-    color: white;
+    color: #fff;
     border: none;
-    border-radius: 0 5px 5px 0; 
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 16px;
-}
-
-.search-button:focus,
-.search-button:hover {
-    background-color: #0056b3;
-}
-
-.company-list {
-    list-style-type: none; 
-    padding: 0; 
-}
-
-.company-item {
-    background-color: #ffffff; 
-    margin: 10px 0; 
-    padding: 10px; 
-    border-radius: 5px; 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-}
-
-.company-link {
-    text-decoration: none; 
-    color: #007bff; 
-    font-weight: bold; 
-}
-
-.company-container {
-    padding: 20px;
-}
+  }
+  
+  .company-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .company-item {
+    margin-bottom: 10px;
+  }
+  
+  .company-link {
+    text-decoration: none;
+    color: #007bff;
+  }
+  
+  .company-details {
+    margin-top: 20px;
+  }
+  
+  .company-details h2 {
+    margin-bottom: 10px;
+  }
+  
+  .company-details p {
+    margin: 5px 0;
+  }

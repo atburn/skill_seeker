@@ -5,76 +5,78 @@ import './Company.css';
 import JobList from './JobList';
 
 const CompanyList = ({ onSelectCompany }) => {
-    const [companies, setCompanies] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
+  const [companies, setCompanies] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
-    useEffect(() => {
-        const fetchCompanies = async () => {
-            const response = await axios('http://localhost:2000/companies/');
-            setCompanies(response.data);
-        };
-        fetchCompanies();
-    }, []);
+  useEffect(() => {
+    const fetchCompanies = async () => {
+      const response = await axios('http://localhost:2000/companies/');
+      setCompanies(response.data);
+    };
+    fetchCompanies();
+  }, []);
 
-    const filteredCompanies = companies.filter(company =>
-        company.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+  const filteredCompanies = companies.filter(company =>
+    company.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-    return (
-        <div>
-            <div className="search-container">
-                <input 
-                    type="text"
-                    placeholder="Search for companies..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="search-bar"   
-                />
-                <button className="search-button">Search</button>
-            </div>
-            <ul>
-                {filteredCompanies.map((company) => (
-                    <li key={company.uid}>
-                        <Link to={`/companies/${company.uid}`} onClick={() => onSelectCompany(company.uid)}>
-                            {company.name}
-                        </Link>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
+  return (
+    <div>
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Search for companies..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-bar"
+        />
+        <button className="search-button">Search</button>
+      </div>
+      <ul className="company-list">
+        {filteredCompanies.map((company) => (
+          <li key={company.uid} className="company-item">
+            <Link to={`/companies/${company.uid}`} onClick={() => onSelectCompany(company.uid)} className="company-link">
+              {company.name}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 };
 
 const Company = () => {
-    const [selectedCompanyId, setSelectedCompanyId] = useState(null);
-    const [companyDetails, setCompanyDetails] = useState(null);
+  const [selectedCompanyId, setSelectedCompanyId] = useState(null);
+  const [companyDetails, setCompanyDetails] = useState(null);
 
-    useEffect(() => {
-        const fetchCompanyDetails = async () => {
-            if (selectedCompanyId) {
-                const response = await axios(`http://localhost:2000/companies/${selectedCompanyId}`);
-                setCompanyDetails(response.data);
-            }
-        };
-        fetchCompanyDetails();
-    }, [selectedCompanyId]);
+  useEffect(() => {
+    const fetchCompanyDetails = async () => {
+      if (selectedCompanyId) {
+        const response = await axios(`http://localhost:2000/companies/${selectedCompanyId}`);
+        setCompanyDetails(response.data);
+      }
+    };
+    fetchCompanyDetails();
+  }, [selectedCompanyId]);
 
-    return (
-        <div>
-            <h1>Companies</h1>
-            <CompanyList onSelectCompany={setSelectedCompanyId} />
-            {selectedCompanyId && companyDetails && (
-                <div>
-                    <h2>{companyDetails.name}</h2>
-                    <p>Industry: {companyDetails.industry}</p>
-                    <p>Location: {companyDetails.location}</p>
-                    <p>Email: {companyDetails.email}</p>
-                    <p>Description: {companyDetails.summary}</p>
-                    <JobList companyId={selectedCompanyId} />
-                </div>
-            )}
+  return (
+    <div className="company-page">
+      <div className="company-header">
+        <h1>Companies</h1>
+      </div>
+      <CompanyList onSelectCompany={setSelectedCompanyId} />
+      {selectedCompanyId && companyDetails && (
+        <div className="company-details">
+          <h2>{companyDetails.name}</h2>
+          <p>Industry: {companyDetails.industry}</p>
+          <p>Location: {companyDetails.location}</p>
+          <p>Email: {companyDetails.email}</p>
+          <p>Description: {companyDetails.summary}</p>
+          <JobList companyId={selectedCompanyId} />
         </div>
-    );
+      )}
+    </div>
+  );
 };
 
 export default Company;
