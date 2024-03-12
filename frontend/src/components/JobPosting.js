@@ -163,7 +163,7 @@ function JobPosting() {
 
     const filteredJobs = Object.keys(jobs).reduce((filtered, companyId) => {
         const companyJobs = jobs[companyId];
-
+    
         const filteredCompanyJobs = Object.keys(companyJobs).filter(jobId => {
             const job = companyJobs[jobId];
             console.log(job);
@@ -176,80 +176,59 @@ function JobPosting() {
             obj[jobId] = companyJobs[jobId];
             return obj;
         }, {});
-
+    
         if (Object.keys(filteredCompanyJobs).length > 0) {
             filtered[companyId] = filteredCompanyJobs;
         }
-
+    
         return filtered;
     }, {});
-
+    
     return (
         <div className="job-posting">
-            {/* Original job search */}
-            <div>
-                <h2>Search for Jobs</h2>
+            <h2>Search for Jobs</h2>
+            <div className="search-bar">
                 <input
                     type="text"
                     placeholder="Search by title, location, description..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                {/* Render original job search results */}
+                <button>Search</button>
             </div>
-
-            {/* External job search */}
-            <div>
-                <h2>Search for External Jobs</h2>
-                <input
-                    type="text"
-                    placeholder="Search by title, location, description..."
-                    value={externalSearchTerm}
-                    onChange={(e) => setExternalSearchTerm(e.target.value)}
-                />
-                <button onClick={fetchExternalJobs}>Search</button>
-                {/* Render external job search results */}
-                {externalJobs.map(job => (
-                    <div key={job.id}>
-                        <h3>{job.title}</h3>
-                        <p>Location: {job.location}</p>
-                        
-                        <button onClick={() => handleViewJob(job)}>View Details</button>
-                        <button onClick={() => handleApply(job)}>Apply</button>
+    
+            <div className="job-posting-results">
+                {Object.entries(filteredJobs).map(([companyId, companyJobs]) => (
+                    <div key={companyId} className="company-jobs">
+                        <h2>{companies[companyId]}</h2>
+                        {Object.entries(companyJobs).map(([jobId, job]) => (
+                            <div key={jobId} className="job-item">
+                                <h3>{job.title}</h3>
+                                <p>Location: {job.location}</p>
+                                <p>Description: {job.description}</p>
+                                <div className="job-actions">
+                                    <button className="view-button" onClick={() => handleViewJob(job)}>View Details</button>
+                                    <button className="apply-button" onClick={() => handleApply(job.id)}>Apply</button>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 ))}
             </div>
-
-
-            <h2>Job Postings</h2>
-      {Object.entries(filteredJobs).map(([companyId, companyJobs]) => (
-        <div key={companyId}>
-          <h3>{companies[companyId]}</h3>
-          {Object.entries(companyJobs).map(([jobId, job]) => (
-            <div key={jobId}>
-              <h4>{job.title}</h4>
-              <p>Location: {job.location}</p>
-              <p>Description: {job.description}</p>
-              <button onClick={() => handleViewJob(job)}>View Details</button>
-              <button onClick={() => handleApply(job.id)}>Apply</button>
-            </div>
-          ))}
-        </div>
-      ))}
-
-      {selectedJob && (
-        <JobDetails job={selectedJob} onClose={handleCloseJob} />
-      )}
-
-      {isApplying && (
-        <JobApplicationForm
-          job={selectedJob}
-          onSubmit={handleSubmit}
-          onInputChange={handleInputChange}
-          handleInputChange={handleInputChange}
-          onFileChange={handleFileChange}
-        />
-      )}
+    
+            {selectedJob && (
+                <JobDetails job={selectedJob} onClose={handleCloseJob} />
+            )}
+    
+            {isApplying && (
+                <JobApplicationForm
+                    job={selectedJob}
+                    onSubmit={handleSubmit}
+                    onInputChange={handleInputChange}
+                    handleInputChange={handleInputChange}
+                    onFileChange={handleFileChange}
+                />
+            )}
         </div>
     );
 }
