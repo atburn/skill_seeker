@@ -15,6 +15,7 @@ import ViewProfile from './components/ViewProfile';
 import axios from 'axios';
 import { Routes, Route } from 'react-router-dom';
 import Logout from './components/Logout';
+import AddJobPage from './components/AddJobPage';
 function App() {
 
   return (
@@ -34,7 +35,7 @@ function App() {
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/view-profile" element={<ViewProfile />} />
         <Route path="/logout" element={<Logout />} />
-        
+        <Route path="/companies/:companyId/jobs/new" element={<AddJobPage />} />
       </Routes>
     </>
   ) 

@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import './CompanyDetailPage.css';
 
 function CompanyDetailPage() {
-    const { companyId } = useParams();
-    const navigate = useNavigate();
-    const [company, setCompany] = useState(null);
-    const [jobs, setJobs] = useState([]);
+  const { companyId } = useParams();
+  const navigate = useNavigate();
+  const [company, setCompany] = useState(null);
+  const [jobs, setJobs] = useState([]);
 
     useEffect(() => {
         const fetchCompanyDetails = async () => {
@@ -33,9 +32,17 @@ function CompanyDetailPage() {
         fetchCompanyDetails();
     }, [companyId]);
 
+    const handleAddJob = () => {
+        navigate(`/companies/${companyId}/jobs/new`);
+      };
+    
+
+
     if (!company) {
         return <div>Loading...</div>;
     }
+
+
 
     return (
         <div className="company-detail-page">
@@ -62,8 +69,10 @@ function CompanyDetailPage() {
             ) : (
                 <p>No current job openings.</p>
             )}
+            
+            <button onClick={handleAddJob}>Add New Job</button>
             <br></br>
-            <button onClick={() => navigate(-1)}>Back to Main Companies Page</button>
+            <Link to="/company">Back to Job Listings</Link>
         </div>
     );
 }
