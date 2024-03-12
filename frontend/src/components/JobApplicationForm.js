@@ -6,9 +6,7 @@ import './JobApplicationForm.css';
 function JobApplicationForm() {
   const { jobId } = useParams();
   const [jobDetails, setJobDetails] = useState({
-    title: '',
-    qualifications: '',
-    responsibilities: '',
+    company: '',
   });
   const [applicantData, setApplicantData] = useState({
     name: '',
@@ -40,7 +38,11 @@ function JobApplicationForm() {
       email: applicantData.email,
     };
     try {
-      await axios.post(`http://localhost:2000/apply/${jobId}`, applicationData);
+      await axios.post(`http://localhost:2000/apply/${jobId}`, applicationData, {
+        headers: {
+          'sender-uid': localStorage.getItem('uid'),
+        },
+      });
       alert('Application submitted successfully!');
     } catch (error) {
       console.error('Application submission error:', error);
@@ -51,6 +53,9 @@ function JobApplicationForm() {
   return (
     <div className="job-application-container">
       <h2>Apply for {jobDetails.title}</h2>
+      <div className="job-details">
+        <p>Company: {jobDetails.company}</p>
+      </div>
       <form className="job-application-form" onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Name:</label>

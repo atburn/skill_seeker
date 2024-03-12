@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import './JobPosting.css';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 function JobDetails({ job, onClose }) {
@@ -52,7 +51,6 @@ function JobPosting() {
         email: '',
         qualifications: '',
         responsibilities: '',
-        resume: null,
     });
    
     const [externalSearchTerm, setExternalSearchTerm] = useState('');
@@ -68,7 +66,12 @@ function JobPosting() {
             const response = await axios.get('http://localhost:2000/jobs');
             setJobs(response.data);
         } catch (error) {
-            console.error('Error fetching job information:', error);
+            console.error('Error fetching jobs:', error);
+            if (error.response && error.response.status === 401) {
+                alert('Unauthorized access. Please log in to view job details.');
+            } else {
+                alert('An error occurred while fetching jobs. Please try again later.');
+            }
         }
     };
 
@@ -118,7 +121,6 @@ function JobPosting() {
         setSelectedJob(jobId);
         setIsApplying(true);
         navigate(`/apply/${jobId}`);
-        
     };
 
     const handleInputChange = (e) => {
@@ -154,7 +156,7 @@ function JobPosting() {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
             console.log(response.data);
-            setIsApplying(false); // Close form upon submission
+            setIsApplying(false); 
             alert('Application submitted successfully!');
         } catch (error) {
             console.error('Application submission error:', error);
@@ -208,7 +210,7 @@ function JobPosting() {
                                 <p>Description: {job.description}</p>
                                 <div className="job-actions">
                                     <button className="view-button" onClick={() => handleViewJob(job)}>View Details</button>
-                                    <button className="apply-button" onClick={() => handleApply(job.id)}>Apply</button>
+                                    <button className="apply-button" onClick={() => handleApply(jobId)}>Apply</button>
                                 </div>
                             </div>
                         ))}
